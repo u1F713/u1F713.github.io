@@ -1,0 +1,17 @@
+pre-push:
+  commands:
+    packages-audit:
+      tags: frontend security
+      run: pnpm audit
+
+pre-commit:
+  commands:
+    format:
+      glob: '*.{ts,tsx,astro,md,mdx,json,jsonc}'
+      run: pnpm prettier --write --cache {staged_files}
+      stage_fixed: true
+
+    lint:
+      glob: '*.{ts,tsx,astro}'
+      run: pnpm eslint --flag unstable_ts_config --fix {staged_files}
+      stage_fixed: true
