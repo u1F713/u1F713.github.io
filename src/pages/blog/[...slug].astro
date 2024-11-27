@@ -1,0 +1,22 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content'
+import { pipe, map } from 'remeda'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+
+interface Props {
+  entry: CollectionEntry<'blog'>
+}
+
+export const getStaticPaths = async () =>
+  pipe(
+    await getCollection('blog'),
+    map(entry => ({ params: { slug: entry.slug }, props: { entry } }))
+  )
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<BaseLayout>
+  <Content />
+</BaseLayout>
