@@ -4,5 +4,9 @@ import DocumentHead from '@/components/DocumentHead.astro'
 
 <html lang="en">
   <DocumentHead title="Home" />
-  <body><slot /></body>
+  <body>
+    <div class="m-auto max-w-screen-lg place-content-center justify-center">
+      <slot />
+    </div>
+  </body>
 </html>
