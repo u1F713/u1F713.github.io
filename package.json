@@ -9,7 +9,8 @@
     "fmt": "prettier --write --cache \"**/*.{ts,tsx,md,mdx,astro}\""
   },
   "dependencies": {
-    "astro": "5.0.0-beta.10"
+    "astro": "5.0.0-beta.10",
+    "remeda": "^2.17.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
