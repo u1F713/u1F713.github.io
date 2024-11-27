@@ -1,164 +1,80 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>u1F713</title>
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+---
 
-    <!-- Fonts preload -->
-    <link
-      rel="preload"
-      href="/fonts/IBMPlexMono-Text.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/IBMPlexMono-TextItalic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/IBMPlexMono-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/IBMPlexMono-BoldItalic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+<BaseLayout>
+  <main
+    class="m-auto grid max-w-screen-lg place-content-center justify-center gap-8 p-5 md:grid-cols-[auto_auto]"
+  >
+    <section>
+      <h1 class="mb-5 mt-2 text-3xl font-bold">Good for health, bad for...</h1>
 
-    <style is:global>
-      @font-face {
-        font-family: 'IBM Plex Mono';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src:
-          local('IBM Plex Mono Text'),
-          local('IBMPlexMono-Text'),
-          url('/fonts/IBMPlexMono-Text.woff2') format('woff2');
-      }
+      <p class="my-5 italic text-gray-600">tl;dr: Monads...</p>
 
-      @font-face {
-        font-family: 'IBM Plex Mono';
-        font-style: italic;
-        font-weight: 400;
-        font-display: swap;
-        src:
-          local('IBM Plex Mono Text Italic'),
-          local('IBMPlexMono-TextItalic'),
-          url('/fonts/IBMPlexMono-TextItalic.woff2') format('woff2');
-      }
+      <p class="my-5">
+        My first computer was an IBM ThinkPad A31, running a Debian-based
+        operating system. Since then, I've been a dedicated Linux user,
+        exploring various distributions like Arch, Void, openSUSE, and Fedora
+        Linux. Among them, Arch Linux is the one I've spent the most time with.
+      </p>
+      <p class="my-5">
+        I began my web development journey by learning Python and Flask. After
+        experimenting with Java's Spring Framework, I ultimately transitioned
+        to TypeScript and Node.js.
+      </p>
+      <p class="my-5">
+        My journey into the world of modern web development began with an
+        introduction to Angular 2, which led me to discover TypeScript.
+        Previously, I had explored functional programming through my experience
+        with xmonad, a Haskell-based window manager. This background helped me
+        appreciate ReactJS's functional component model, sparking my curiosity
+        to learn more about this innovative framework.
+      </p>
+      <p class="my-5">
+        In 2020, inspired by the many developers and all the cool tools build
+        around Nix, I embark on daily driving NixOS. While still learning the
+        ropes, I'm eager to share my experiences as a web developer using
+        open-source technologies.
+      </p>
+    </section>
 
-      @font-face {
-        font-family: 'IBM Plex Mono';
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src:
-          local('IBM Plex Mono Bold'),
-          local('IBMPlexMono-Bold'),
-          url('/fonts/IBMPlexMono-Bold.woff2') format('woff2');
-      }
+    <section>
+      <h2 class="mb-5 mt-2 text-2xl font-bold">What I've got going on</h2>
 
-      @font-face {
-        font-family: 'IBM Plex Mono';
-        font-style: italic;
-        font-weight: 700;
-        font-display: swap;
-        src:
-          local('IBM Plex Mono Bold Italic'),
-          local('IBMPlexMono-BoldItalic'),
-          url('/fonts/IBMPlexMono-BoldItalic.woff2') format('woff2');
-      }
-    </style>
-  </head>
-  <body>
-    <main
-      class="m-auto grid max-w-screen-lg place-content-center justify-center gap-8 p-5 md:grid-cols-[auto_auto]"
-    >
-      <section>
-        <h1 class="mb-5 mt-2 text-3xl font-bold">
-          Good for health, bad for...
-        </h1>
-
-        <p class="my-5 italic text-gray-600">tl;dr: Monads...</p>
-
-        <p class="my-5">
-          My first computer was an IBM ThinkPad A31, running a Debian-based
-          operating system. Since then, I've been a dedicated Linux user,
-          exploring various distributions like Arch, Void, openSUSE, and Fedora
-          Linux. Among them, Arch Linux is the one I've spent the most time
-          with.
-        </p>
-        <p class="my-5">
-          I began my web development journey by learning Python and Flask.
-          After experimenting with Java's Spring Framework, I ultimately
-          transitioned to TypeScript and Node.js.
-        </p>
-        <p class="my-5">
-          My journey into the world of modern web development began with an
-          introduction to Angular 2, which led me to discover TypeScript.
-          Previously, I had explored functional programming through my
-          experience with xmonad, a Haskell-based window manager. This
-          background helped me appreciate ReactJS's functional component model,
-          sparking my curiosity to learn more about this innovative framework.
-        </p>
-        <p class="my-5">
-          In 2020, inspired by the many developers and all the cool tools build
-          around Nix, I embark on daily driving NixOS. While still learning the
-          ropes, I'm eager to share my experiences as a web developer using
-          open-source technologies.
-        </p>
-      </section>
-
-      <section>
-        <h2 class="mb-5 mt-2 text-2xl font-bold">What I've got going on</h2>
-
-        <ul class="flex list-[hiragana] flex-col justify-center gap-1 pl-8">
-          <li class="">
-            Learning
-            <a
-              class="font-bold text-indigo-700 hover:text-indigo-900"
-              href="https://effect.website/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Effect-TS.
-            </a>
-          </li>
-          <li>Reading On Revolution by Hannah Arendt.</li>
-          <li>
-            Playing Type Lumina;
-            <a
-              class="font-bold text-indigo-700 hover:text-indigo-900"
-              href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_neco-arc_command_lists_en.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Neco-Arc
-            </a>
-            and
-            <a
-              class="font-bold text-indigo-700 hover:text-indigo-900"
-              href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_kohaku_command_lists_en.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Kohaku.
-            </a>
-          </li>
-        </ul>
-      </section>
-    </main>
-  </body>
-</html>
+      <ul class="flex list-[hiragana] flex-col justify-center gap-1 pl-8">
+        <li class="">
+          Learning
+          <a
+            class="font-bold text-indigo-700 hover:text-indigo-900"
+            href="https://effect.website/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Effect-TS.
+          </a>
+        </li>
+        <li>Reading On Revolution by Hannah Arendt.</li>
+        <li>
+          Playing Type Lumina;
+          <a
+            class="font-bold text-indigo-700 hover:text-indigo-900"
+            href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_neco-arc_command_lists_en.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Neco-Arc
+          </a>
+          and
+          <a
+            class="font-bold text-indigo-700 hover:text-indigo-900"
+            href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_kohaku_command_lists_en.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Kohaku.
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
