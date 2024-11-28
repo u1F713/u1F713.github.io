@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection } from 'astro:content'
 import { pipe, map } from 'remeda'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import ContentLayout from '@/layouts/ContentLayout.astro'
 
 interface Props {
   entry: CollectionEntry<'blog'>
@@ -18,5 +19,7 @@ const { Content } = await entry.render()
 ---
 
 <BaseLayout>
-  <Content />
+  <ContentLayout {...entry.data}>
+    <Content />
+  </ContentLayout>
 </BaseLayout>

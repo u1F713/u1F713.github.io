@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+type Props = CollectionEntry<'blog'>['data']
+
+const { title, description } = Astro.props
+---
+
+<main class="my-8 px-4">
+  <article class="mx-auto w-fit">
+    <section class="my-4">
+      <h1 class="pt-4 text-3xl font-bold">{title}</h1>
+      <p class="pt-2">{description}</p>
+    </section>
+
+    <div class="prose"><slot /></div>
+  </article>
+</main>
