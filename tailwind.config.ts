@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme'
+import typography from '@tailwindcss/typography'
 
 export default {
   content: ['./src/**/*.{astro,md,mdx,ts,tsx}'],
@@ -10,5 +11,5 @@ export default {
       }
     }
   },
-  plugins: []
+  plugins: [typography]
 } as Config
