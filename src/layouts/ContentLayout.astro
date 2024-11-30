@@ -7,12 +7,12 @@ const { title, description } = Astro.props
 ---
 
 <main class="my-8 px-4">
-  <article class="mx-auto w-fit">
+  <article class="prose mx-auto">
     <section class="my-4">
-      <h1 class="pt-4 text-3xl font-bold">{title}</h1>
-      <p class="pt-2">{description}</p>
+      <h1 class="font-bold">{title}</h1>
+      <p>{description}</p>
     </section>
 
-    <div class="prose"><slot /></div>
+    <div class="mt-8"><slot /></div>
   </article>
 </main>
