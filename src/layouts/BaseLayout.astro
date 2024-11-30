@@ -1,10 +1,12 @@
 ---
 import DocumentHead from '@/components/DocumentHead.astro'
+import Navbar from '@/components/Navbar.astro'
 ---
 
 <html lang="en">
   <DocumentHead title="Home" />
   <body>
+    <Navbar />
     <div class="m-auto max-w-screen-lg place-content-center justify-center">
       <slot />
     </div>
