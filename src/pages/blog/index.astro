@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+import { pipe, sort, reverse } from 'remeda'
+
+const posts = pipe(
+  await getCollection('blog'),
+  sort(
+    (prev, self) => prev.data.pubDate.getTime() - self.data.pubDate.getTime()
+  ),
+  reverse()
+)
+---
+
+<BaseLayout>
+  <ul class="mx-auto max-w-xl px-4 py-8">
+    {
+      posts.map(({ slug, data }) => (
+        <li class="rounded border border-gray-700 p-3">
+          <a href={`/blog/${slug}`}>
+            <div>
+              <h3>{data.title}</h3>
+              <p>{data.description}</p>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
