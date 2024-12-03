@@ -7,11 +7,8 @@ import '@/global.css'
 <html lang="en" class="赤">
   <DocumentHead title="Home">
     <script>
-      function load() {
-        const mode = localStorage.getItem('mode') ?? 'light'
-        document.documentElement.setAttribute('data-mode', mode)
-      }
-      window.addEventListener('load', load)
+      const mode = localStorage.getItem('mode') ?? 'light'
+      document.documentElement.setAttribute('data-mode', mode)
     </script>
   </DocumentHead>
   <body>
