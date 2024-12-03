@@ -1,10 +1,19 @@
 ---
 import DocumentHead from '@/components/DocumentHead.astro'
 import Navbar from '@/components/Navbar.astro'
+import '@/global.css'
 ---
 
-<html lang="en">
-  <DocumentHead title="Home" />
+<html lang="en" class="赤">
+  <DocumentHead title="Home">
+    <script>
+      function load() {
+        const mode = localStorage.getItem('mode') ?? 'light'
+        document.documentElement.setAttribute('data-mode', mode)
+      }
+      window.addEventListener('load', load)
+    </script>
+  </DocumentHead>
   <body>
     <Navbar />
     <div class="m-auto max-w-screen-lg place-content-center justify-center">
