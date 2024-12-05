@@ -9,13 +9,13 @@
     "fmt": "prettier --write --cache \"**/*.{ts,tsx,md,mdx,astro}\""
   },
   "dependencies": {
-    "astro": "5.0.0-beta.10",
+    "astro": "5.0.2",
     "remeda": "^2.17.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "4.0.0-beta.5",
-    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/mdx": "4.0.1",
+    "@astrojs/tailwind": "^5.1.3",
     "@astrojs/ts-plugin": "^1.10.4",
     "@eslint/js": "^9.15.0",
     "@tailwindcss/typography": "^0.5.15",
