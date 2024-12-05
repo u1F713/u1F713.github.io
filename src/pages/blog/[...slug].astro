@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content'
+import { type CollectionEntry, getCollection, render } from 'astro:content'
 import { pipe, map } from 'remeda'
 import PageLayout from '@/layouts/PageLayout.astro'
 import ContentLayout from '@/layouts/ContentLayout.astro'
@@ -11,11 +11,11 @@ interface Props {
 export const getStaticPaths = async () =>
   pipe(
     await getCollection('blog'),
-    map(entry => ({ params: { slug: entry.slug }, props: { entry } }))
+    map(entry => ({ params: { slug: entry.id }, props: { entry } }))
   )
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
+const { Content } = await render(entry)
 ---
 
 <PageLayout>
