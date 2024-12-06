@@ -4,14 +4,16 @@ import Navbar from '@/components/Navbar.astro'
 import '@/global.css'
 ---
 
-<html lang="en" class="赤">
+<html lang="en" class="bg-ds-blank-100 赤">
   <DocumentHead title="Home">
     <script>
-      const mode = localStorage.getItem('mode') ?? 'light'
-      document.documentElement.setAttribute('data-mode', mode)
+      const mode = localStorage.getItem('invert-theme')
+      if (mode) {
+        document.documentElement.classList.add('scheme-dark')
+      }
     </script>
   </DocumentHead>
-  <body>
+  <body class="">
     <Navbar />
     <div class="m-auto max-w-screen-lg place-content-center justify-center">
       <slot />

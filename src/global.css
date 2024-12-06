@@ -1,7 +1,19 @@
-[data-mode='light'] {
-  color-scheme: light;
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-ds-blank-100: var(--ds-blank-100, oklch(95.78% 0.0058 264.53));
+  --color-ds-blank-200: var(--ds-blank-200, oklch(98.11 0.0058 264.53));
+  --color-ds-accent-600: var(--dn-accent);
+  --color-ds-accent-700: oklch(from var(--dn-accent) 46.89% c h);
 }
 
-[data-mode='light'].赤 {
-  --dn-accent: 0.2405;
+@layer base {
+  html {
+    font-family: 'IBM Plex Mono', monospace, system-ui;
+  }
+}
+
+.赤 {
+  --dn-accent: oklch(51.92% 0.1886 30.18);
 }
