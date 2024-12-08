@@ -13,10 +13,13 @@ import '@/global.css'
       }
     </script>
   </DocumentHead>
-  <body class="">
+  <body class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
     <Navbar />
-    <div class="m-auto max-w-screen-lg place-content-center justify-center">
+    <div class="m-auto w-full max-w-screen-lg">
       <slot />
+    </div>
+    <div class="m-auto mt-5 w-full max-w-screen-lg p-5 text-gray-700">
+      GPL-3.0 2024 © u1F713
     </div>
   </body>
 </html>
