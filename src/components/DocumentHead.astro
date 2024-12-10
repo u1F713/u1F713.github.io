@@ -94,4 +94,26 @@ const { title = 'u1f713', description } = Astro.props
   </style>
 
   <slot />
+
+  <!-- scripts -->
+  <script>
+    function preloadTheme() {
+      const userTheme = localStorage.getItem('theme')
+
+      if (userTheme === 'dark' || userTheme === 'light') {
+        window.addEventListener('storage', preloadTheme, { once: true })
+        return document.documentElement.setAttribute('data-theme', userTheme)
+      }
+
+      const prefers = window.matchMedia('(prefers-color-scheme: dark)')
+
+      document.documentElement.setAttribute(
+        'data-theme',
+        prefers.matches ? 'dark' : 'light'
+      )
+      prefers.addEventListener('change', preloadTheme, { once: true })
+    }
+
+    preloadTheme()
+  </script>
 </head>

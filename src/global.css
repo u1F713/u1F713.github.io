@@ -2,10 +2,33 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-ds-blank-100: var(--ds-blank-100, oklch(95.78% 0.0058 264.53));
-  --color-ds-blank-200: var(--ds-blank-200, oklch(98.11 0.0058 264.53));
-  --color-ds-accent-600: var(--dn-accent);
-  --color-ds-accent-700: oklch(from var(--dn-accent) 46.89% c h);
+  --color-dn-blank-100: var(--dn-blank-100);
+  --color-dn-blank-200: var(--dn-blank-200);
+  --color-dn-accent-600: var(--dn-accent-600);
+  --color-dn-accent-700: var(--dn-accent-700);
+  --color-dn-contrast: var(--dn-contrast);
+}
+
+@layer theme {
+  [data-theme='light'] {
+    @apply scheme-light;
+
+    --dn-blank-100: oklch(100% 0 0);
+    --dn-blank-200: oklch(98.51% 0 0);
+    --dn-contrast: oklch(0% 0 0);
+    --dn-accent-600: oklch(from var(--dn-accent) l c h);
+    --dn-accent-700: oklch(from var(--dn-accent) 51% c h);
+  }
+
+  [data-theme='dark'] {
+    @apply scheme-dark;
+
+    --dn-blank-100: oklch(11.49% 0 0);
+    --dn-blank-200: oklch(0% 0 0);
+    --dn-contrast: oklch(100% 0 0);
+    --dn-accent-600: oklch(from var(--dn-accent) l c h);
+    --dn-accent-700: oklch(from var(--dn-accent) 67% c h);
+  }
 }
 
 @layer base {
@@ -15,5 +38,5 @@
 }
 
 .赤 {
-  --dn-accent: oklch(51.92% 0.1886 30.18);
+  --dn-accent: oklch(58.57% 0.2152 29.8);
 }
