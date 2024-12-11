@@ -16,11 +16,13 @@ const posts = pipe(
   <ul class="mx-auto max-w-xl px-4 py-8">
     {
       posts.map(({ id, data }) => (
-        <li class="rounded border border-gray-700 p-3">
+        <li class="border-dn-accent-200/90 rounded border p-3">
           <a href={`/blog/${id}`}>
             <div>
-              <h3>{data.title}</h3>
-              <p>{data.description}</p>
+              <h3 class="text-dn-accent-950 mb-2 text-lg font-bold">
+                {data.title}
+              </h3>
+              <p class="text-dn-accent-900">{data.description}</p>
             </div>
           </a>
         </li>

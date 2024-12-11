@@ -1,42 +1,124 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
-@theme {
-  --color-dn-blank-100: var(--dn-blank-100);
-  --color-dn-blank-200: var(--dn-blank-200);
-  --color-dn-accent-600: var(--dn-accent-600);
-  --color-dn-accent-700: var(--dn-accent-700);
-  --color-dn-contrast: var(--dn-contrast);
+@layer theme, base, components, utilities;
+
+@layer base {
+  ::selection {
+    background-color: color-mix(
+      in oklab,
+      var(--dn-accent-50) 60%,
+      transparent
+    );
+  }
+
+  html {
+    font-family: 'IBM Plex Mono', monospace, system-ui;
+    color: var(--dn-accent-900);
+  }
+}
+
+@layer utilities {
+  .prose {
+    --tw-prose-body: var(--dn-accent-900);
+    --tw-prose-headings: var(--dn-accent-950);
+    --tw-prose-lead: var(--dn-accent-800);
+    --tw-prose-links: var(--dn-accent-50);
+    --tw-prose-bold: currentcolor;
+    --tw-prose-counters: var(--dn-accent-100);
+    --tw-prose-bullets: var(--dn-accent-100);
+    --tw-prose-quotes: var(--dn-accent-950);
+    --tw-prose-quote-borders: var(--dn-accent-200);
+    --tw-prose-captions: var(--dn-accent-800);
+    --tw-prose-code: var(--dn-accent-500);
+    --tw-prose-pre-code: var(--dn-accent-100);
+    --tw-prose-pre-bg: transparent;
+    --tw-prose-th-borders: var(--dn-accent-200);
+    --tw-prose-td-borders: var(--dn-accent-200);
+  }
 }
 
 @layer theme {
-  [data-theme='light'] {
-    @apply scheme-light;
-
-    --dn-blank-100: oklch(100% 0 0);
-    --dn-blank-200: oklch(98.51% 0 0);
-    --dn-contrast: oklch(0% 0 0);
-    --dn-accent-600: oklch(from var(--dn-accent) l c h);
-    --dn-accent-700: oklch(from var(--dn-accent) 51% c h);
-  }
-
   [data-theme='dark'] {
     @apply scheme-dark;
+    --dn-bg-100: oklch(11.49% 0 0);
+    --dn-bg-200: oklch(0% 0 0);
+    --dn-accent-950: oklch(100% 0 0);
+  }
 
-    --dn-blank-100: oklch(11.49% 0 0);
-    --dn-blank-200: oklch(0% 0 0);
-    --dn-contrast: oklch(100% 0 0);
-    --dn-accent-600: oklch(from var(--dn-accent) l c h);
-    --dn-accent-700: oklch(from var(--dn-accent) 67% c h);
+  [data-theme='light'] {
+    @apply scheme-light;
+    --dn-bg-100: oklch(100% 0 0);
+    --dn-bg-200: oklch(98.51% 0 0);
+    --dn-accent-950: oklch(0% 0 0);
+  }
+
+  .赤 {
+    --dn-accent-50: oklch(60.28% 0.2172 29.84);
+    &[data-theme='dark'] {
+      --dn-accent-100: oklch(62.83% 0.2011 29.24);
+      --dn-accent-200: oklch(65.68% 0.1808 28.17);
+      --dn-accent-300: oklch(69.27% 0.158 27.42);
+      --dn-accent-400: oklch(72.96% 0.1339 26.39);
+      --dn-accent-500: oklch(77.24% 0.1095 25.4);
+      --dn-accent-600: oklch(81.43% 0.0856 24.44);
+      --dn-accent-700: oklch(86.07% 0.0627 24.55);
+      --dn-accent-800: oklch(90.55% 0.0406 23.57);
+      --dn-accent-900: oklch(98.6% 0.0198 25.17);
+    }
+    &[data-theme='light'] {
+      --dn-accent-100: oklch(55.78% 0.1997 29.74);
+      --dn-accent-200: oklch(51.18% 0.182 29.82);
+      --dn-accent-300: oklch(46.49% 0.1638 29.67);
+      --dn-accent-400: oklch(41.67% 0.145 29.77);
+      --dn-accent-500: oklch(36.73% 0.1255 29.53);
+      --dn-accent-600: oklch(31.63% 0.105 29.12);
+      --dn-accent-700: oklch(26.33% 0.0835 29.18);
+      --dn-accent-800: oklch(20.81% 0.0599 28.54);
+      --dn-accent-900: oklch(14.78% 0.0356 32.03);
+    }
+  }
+
+  .青 {
+    --dn-accent-50: oklch(60.28% 0.2176590671638268 257.4238679526439);
+    &[data-theme='light'] {
+      --dn-accent-100: oklch(55.89% 0.2006 257.28);
+      --dn-accent-200: oklch(51.33% 0.1818 256.95);
+      --dn-accent-300: oklch(46.53% 0.1651 257);
+      --dn-accent-400: oklch(41.75% 0.1454 256.52);
+      --dn-accent-500: oklch(36.91% 0.1264 256.08);
+      --dn-accent-600: oklch(31.83% 0.1051 255.1);
+      --dn-accent-700: oklch(26.55% 0.0829 253.41);
+      --dn-accent-800: oklch(20.8% 0.0622 252);
+      --dn-accent-900: oklch(14.87% 0.0366 244.03);
+    }
+    &[data-theme='dark'] {
+      --dn-accent-100: oklch(63.22% 0.2005749890586128 255.5483259965503);
+      --dn-accent-200: oklch(66.69% 0.18059917443923365 253.71552509698503);
+      --dn-accent-300: oklch(70.26% 0.159691445313108 252.80296934331466);
+      --dn-accent-400: oklch(74.04% 0.1378 252.1);
+      --dn-accent-500: oklch(78.27% 0.1139586207115061 251.28627410544652);
+      --dn-accent-600: oklch(82.38% 0.0911 250.91);
+      --dn-accent-700: oklch(86.67% 0.06768433007019597 251.29922197368924);
+      --dn-accent-800: oklch(90.97% 0.045055903577687295 251.40820826695725);
+      --dn-accent-900: oklch(95.6% 0.0217 250.21);
+    }
   }
 }
 
-@layer base {
-  html {
-    font-family: 'IBM Plex Mono', monospace, system-ui;
-  }
-}
+@theme {
+  --color-dn-bg-100: var(--dn-bg-100);
+  --color-dn-bg-200: var(--dn-bg-200);
 
-.赤 {
-  --dn-accent: oklch(58.57% 0.2152 29.8);
+  --color-dn-accent-50: var(--dn-accent-50);
+  --color-dn-accent-100: var(--dn-accent-100);
+  --color-dn-accent-200: var(--dn-accent-200);
+  --color-dn-accent-300: var(--dn-accent-300);
+  --color-dn-accent-400: var(--dn-accent-400);
+  --color-dn-accent-500: var(--dn-accent-500);
+  --color-dn-accent-600: var(--dn-accent-600);
+  --color-dn-accent-700: var(--dn-accent-700);
+  --color-dn-accent-800: var(--dn-accent-800);
+  --color-dn-accent-900: var(--dn-accent-900);
+  --color-dn-accent-950: var(--dn-accent-950);
 }
