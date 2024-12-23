@@ -1,0 +1,33 @@
+{
+  "name": "u1f713-github-io",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "fmt": "prettier --write --cache \"**/*.{ts,tsx,md,mdx}\"",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@tailwindcss/postcss": "4.0.0-beta.8",
+    "@types/node": "^20.17.10",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "babel-plugin-react-compiler": "19.0.0-beta-201e55d-20241215",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "15.1.2",
+    "lefthook": "^1.10.0",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "4.0.0-beta.8",
+    "typescript": "^5.7.2"
+  }
+}

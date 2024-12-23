@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@layer theme, base, components, utilities;
+
+:root {
+  color-scheme: dark light;
+}
