@@ -28,8 +28,8 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
         <Header />
       </div>
 
-      <div>
-        <div className="border-ds-border mx-auto h-full max-w-screen-lg pb-8 md:border-r md:border-l">
+      <div className="mx-auto w-full max-w-screen-lg">
+        <div className="border-ds-border h-full md:border-r md:border-l">
           {children}
         </div>
       </div>

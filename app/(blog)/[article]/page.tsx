@@ -42,7 +42,7 @@ async function Article(props: { params: Promise<{ article: string }> }) {
           alt={data.title}
         />
       )}
-      <div className="prose lg:prose-lg dark:prose-invert mx-auto mt-8 px-4">
+      <div className="prose lg:prose-lg dark:prose-invert mx-auto my-8 px-4 lg:my-16">
         <h1>{data.title}</h1>
         <p className="text-xl font-semibold opacity-50">{data.description}</p>
         <Content components={{ img: Image }} />
