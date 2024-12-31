@@ -23,7 +23,7 @@ export const generateStaticParams = (() => {
 async function Article(props: { params: Promise<{ article: string }> }) {
   const { article } = await props.params
 
-  const { Content } = await Effect.gen(function* () {
+  const { data, Content } = await Effect.gen(function* () {
     const path = yield* Path.Path
     const filePath = path.join(dirPath, `${article}.md`)
     const { data, content } = yield* getEntry(ArticleScheme)(filePath)
@@ -32,9 +32,22 @@ async function Article(props: { params: Promise<{ article: string }> }) {
   }).pipe(runtime.runPromise)
 
   return (
-    <div className="prose lg:prose-lg dark:prose-invert mx-auto px-4">
-      <Content components={{ img: Image }} />
-    </div>
+    <main>
+      {data.image && (
+        <Image
+          className="w-full object-cover"
+          priority={true}
+          loading="eager"
+          src={data.image}
+          alt={data.title}
+        />
+      )}
+      <div className="prose lg:prose-lg dark:prose-invert mx-auto mt-8 px-4">
+        <h1>{data.title}</h1>
+        <p className="text-xl font-semibold opacity-50">{data.description}</p>
+        <Content components={{ img: Image }} />
+      </div>
+    </main>
   )
 }
 
