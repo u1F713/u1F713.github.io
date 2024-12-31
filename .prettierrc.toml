@@ -1,0 +1,7 @@
+semi = false
+printWidth = 79
+tabWidth = 2
+singleQuote = true
+trailingComma = "none"
+arrowParens = "avoid"
+plugins = ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"]

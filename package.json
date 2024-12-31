@@ -1,0 +1,45 @@
+{
+  "name": "u1f713-github-io",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "serve out",
+    "fmt": "prettier --write --cache \"**/*.{ts,tsx,md,mdx}\"",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "effect": "^3.12.0",
+    "next": "15.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@cloudinary/url-gen": "^1.21.0",
+    "@effect/platform": "^0.72.0",
+    "@effect/platform-node": "^0.68.0",
+    "@eslint/eslintrc": "^3.2.0",
+    "@mdx-js/mdx": "^3.1.0",
+    "@shikijs/rehype": "^1.24.4",
+    "@tailwindcss/postcss": "4.0.0-beta.8",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^20.17.10",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "babel-plugin-react-compiler": "19.0.0-beta-201e55d-20241215",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "15.1.2",
+    "lefthook": "^1.10.1",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "serve": "^14.2.4",
+    "sharp": "^0.33.5",
+    "shiki": "^1.24.4",
+    "tailwindcss": "4.0.0-beta.8",
+    "typescript": "^5.7.2",
+    "yaml": "^2.7.0"
+  }
+}
