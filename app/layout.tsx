@@ -29,7 +29,7 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
       </div>
 
       <div>
-        <div className="border-ds-border mx-auto h-full max-w-screen-lg py-8 md:border-r md:border-l">
+        <div className="border-ds-border mx-auto h-full max-w-screen-lg pb-8 md:border-r md:border-l">
           {children}
         </div>
       </div>
