@@ -1,4 +1,6 @@
+import { format } from '@cloudinary/url-gen/actions/delivery'
 import { Cloudinary } from '@cloudinary/url-gen/index'
+import { auto } from '@cloudinary/url-gen/qualifiers/format'
 import { Config, Effect, pipe } from 'effect'
 import NextImage from 'next/image'
 import sharp from 'sharp'
@@ -7,7 +9,8 @@ const getCloudinaryImage = Effect.fn(function* (src: string) {
   const url = yield* pipe(
     Config.string('CLOUDINARY_CLOUD_NAME'),
     Effect.map(cloudName => new Cloudinary({ cloud: { cloudName } })),
-    Effect.map(cloud => cloud.image(src).createCloudinaryURL())
+    Effect.map(cloud => cloud.image(src).delivery(format(auto()))),
+    Effect.map(img => img.toURL())
   )
   const meta = yield* pipe(
     Effect.promise(() => fetch(url)),
