@@ -18,13 +18,22 @@ const getCloudinaryImage = Effect.fn(function* (src: string) {
   return { url, ...meta }
 })
 
-async function Image({ src, alt }: { src: string; alt: string }) {
+type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  src: string
+  alt: string
+  priority?: boolean
+  loading?: 'eager' | 'lazy'
+}
+
+async function Image({ src, alt, ...props }: ImageProps) {
   const { url, width, height } = await Effect.runPromise(
     getCloudinaryImage(src)
   )
   if (!width || !height) {
     throw new Error('Failed to read image metadata')
   }
-  return <NextImage width={width} height={height} src={url} alt={alt} />
+  return (
+    <NextImage {...props} src={url} alt={alt} width={width} height={height} />
+  )
 }
 export default Image
