@@ -5,7 +5,8 @@ export const ArticleScheme = S.Struct({
   description: S.String,
   pubDate: S.Date,
   updatedDate: S.optional(S.Date),
-  image: S.optional(S.String)
+  image: S.optional(S.String),
+  tags: S.String.pipe(S.Array, S.optional)
 })
 
 export type ArticleScheme = typeof ArticleScheme.Type
