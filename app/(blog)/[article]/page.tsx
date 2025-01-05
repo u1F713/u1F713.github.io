@@ -35,7 +35,7 @@ async function Article(props: { params: Promise<{ article: string }> }) {
     <main>
       {data.image && (
         <Image
-          className="w-full object-cover"
+          className="mx-auto w-full max-w-screen-md object-cover"
           priority={true}
           loading="eager"
           src={data.image}
