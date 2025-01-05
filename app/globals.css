@@ -1,29 +1,30 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+@variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 @layer theme, base, components, utilities;
 
-:root {
-  color-scheme: dark light;
-  background-color: var(--ds-bg-200, oklch(95.78% 0.0058 264.53));
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
+@layer theme {
+  [data-theme='dark'] {
     --ds-text-color: oklch(99.55% 0.0313 250.5);
     --color-ds-border: oklch(24.27% 0 0);
     --ds-bg-100: oklch(11.49% 0 0);
     --ds-bg-200: oklch(0% 0 0);
-  }
 
-  .shiki,
-  .shiki span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
+    .shiki,
+    .shiki span {
+      color: var(--shiki-dark) !important;
+      background-color: var(--shiki-dark-bg) !important;
+    }
   }
 }
 
 @theme {
   --color-ds-text: var(--ds-text-color, oklch(32.28% 0.0313 250.5));
   --color-ds-border: var(--ds-muted, oklch(90.06% 0 0));
+}
+
+:root {
+  color-scheme: dark light;
+  background-color: var(--ds-bg-200, oklch(95.78% 0.0058 264.53));
 }
