@@ -5,17 +5,20 @@ const Container = ({
   'border-r': borderR,
   'border-b': borderB,
   'border-l': borderL,
+  'h-full': hFull,
   children
 }: {
   'border-t'?: boolean
   'border-r'?: boolean
   'border-b'?: boolean
   'border-l'?: boolean
+  'h-full'?: boolean
   children: React.ReactNode
 }) => (
   <div
     className={clsx(
       'border-ds-border',
+      hFull && 'h-full',
       borderT && 'border-t',
       borderB && 'border-b'
     )}
