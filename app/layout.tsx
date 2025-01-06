@@ -24,7 +24,7 @@ type RootProps = Readonly<{
 
 const RootLayout: NextPage<RootProps> = ({ children }) => (
   /*
-    suppressHydrationWarning: The `data-theme="dark"` attribute is dynamically 
+    suppressHydrationWarning: The `data-theme` attribute is dynamically 
     updated by a script in the ThemeProvider. 
   */
   <html lang="en" suppressHydrationWarning>
