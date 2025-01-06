@@ -7,7 +7,7 @@ const Home: NextPage = () => (
         <h1 className="mt-2 mb-8 text-3xl font-bold text-black lg:text-4xl dark:text-white">
           Good for health, bad for...
         </h1>
-        <p className="my-5 italic opacity-60">tl;dr: Monads...</p>
+        <p className="text-ds-text/60 my-5 italic">tl;dr: Monads...</p>
 
         <p className="my-5">
           My first computer was an IBM ThinkPad A31, running a Debian-based
