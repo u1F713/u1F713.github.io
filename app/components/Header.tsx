@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 function Header() {
   return (
-    <header className="border-ds-border mx-auto flex max-w-screen-lg items-center justify-between p-4 md:border-r md:border-l">
+    <header className="mx-auto flex items-center justify-between p-4">
       <Link className="text-lg" href="/">
         u1F713
       </Link>

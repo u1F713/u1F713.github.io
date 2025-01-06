@@ -2,7 +2,8 @@ import ThemeSwitch from '@/features/themes/theme-switch'
 import type { Metadata, NextPage } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { IBM_Plex_Sans_JP } from 'next/font/google'
-import Header from './components/Header'
+import Container from './components/container.tsx'
+import Header from './components/Header.tsx'
 import './globals.css'
 
 const IBM_Plex = IBM_Plex_Sans_JP({
@@ -31,21 +32,20 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
       className={`${IBM_Plex.className} text-ds-text grid min-h-screen grid-cols-1 grid-rows-[auto_1fr_auto] antialiased`}
     >
       <ThemeProvider enableSystem>
-        <div className="border-ds-border border-b">
+        <Container border-r border-b border-l>
           <Header />
-        </div>
+        </Container>
 
-        <div className="mx-auto w-full max-w-screen-lg">
-          <div className="border-ds-border h-full md:border-r md:border-l">
-            {children}
-          </div>
-        </div>
-        <div className="border-ds-border border-t">
-          <footer className="border-ds-border mx-auto flex max-w-screen-lg items-center justify-between gap-4 p-4 md:border-r md:border-l">
+        <Container border-l border-r>
+          {children}
+        </Container>
+
+        <Container border-t border-l border-r>
+          <footer className="flex items-center justify-between gap-4 p-4">
             <span className="opacity-50">GPL-3.0 2024 © u1F713</span>
             <ThemeSwitch />
           </footer>
-        </div>
+        </Container>
       </ThemeProvider>
     </body>
   </html>
