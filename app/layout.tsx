@@ -2,6 +2,7 @@ import ThemeSwitch from '@/features/themes/theme-switch'
 import type { Metadata, NextPage } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { IBM_Plex_Sans_JP } from 'next/font/google'
+import Link from 'next/link'
 import Container from './components/container.tsx'
 import Header from './components/Header.tsx'
 import './globals.css'
@@ -41,8 +42,22 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
         </div>
 
         <Container border-t border-l border-r>
-          <footer className="flex items-center justify-between gap-4 p-4">
-            <span className="opacity-50">GPL-3.0 2024 © u1F713</span>
+          <footer className="flex flex-wrap items-center justify-between gap-4 p-4">
+            <nav className="text-ds-text/60 flex flex-wrap gap-2">
+              <Link
+                className="hover:underline"
+                href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+                target="_blank"
+              >
+                &copy; {new Date().getFullYear()} GNU General Public License
+              </Link>
+              <Link
+                className="hover:underline"
+                href="https://github.com/u1F713/u1F713.github.io"
+              >
+                Source Code
+              </Link>
+            </nav>
             <ThemeSwitch />
           </footer>
         </Container>
