@@ -29,13 +29,11 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
   */
   <html lang="en" suppressHydrationWarning>
     <body
-      className={`${IBM_Plex.className} text-ds-text grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
+      className={`${IBM_Plex.className} bg-ds-bg-200 text-ds-text grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
     >
       <ThemeProvider enableSystem>
         <div>
-          <Container border-r border-b border-l>
-            <Header />
-          </Container>
+          <Header />
 
           <Container h-full border-l border-r>
             {children}
