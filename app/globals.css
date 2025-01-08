@@ -24,6 +24,26 @@
   }
 }
 
+@layer utilities {
+  .prose {
+    --tw-prose-body: var(--ds-text-color);
+    --tw-prose-headings: var(--ds-text-color);
+    --tw-prose-lead: var(--ds-text-color);
+    --tw-prose-links: var(--ds-text-color);
+    --tw-prose-counters: var(--ds-text-color);
+    --tw-prose-bullets: var(--ds-text-color);
+    --tw-prose-quotes: var(--ds-text-color);
+    --tw-prose-quote-borders: var(--ds-text-color);
+    --tw-prose-captions: var(--ds-text-color);
+    --tw-prose-th-borders: var(--ds-text-color);
+    --tw-prose-td-borders: var(--ds-text-color);
+    --tw-prose-pre-code: var(--ds-text-color);
+    --tw-prose-code: var(--ds-text-color);
+    --tw-prose-pre-bg: transparent;
+    --tw-prose-bold: currentcolor;
+  }
+}
+
 @theme {
   --color-ds-text: var(--ds-text-color, oklch(32.28% 0.0313 250.5));
   --color-ds-border: var(--ds-border-color, oklch(90.06% 0 0));
