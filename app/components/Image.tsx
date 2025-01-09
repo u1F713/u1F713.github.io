@@ -1,16 +1,25 @@
-import { format } from '@cloudinary/url-gen/actions/delivery'
-import { Cloudinary } from '@cloudinary/url-gen/index'
+import { Cloudinary } from '@cloudinary/url-gen'
+import { Delivery, Resize } from '@cloudinary/url-gen/actions'
 import { auto } from '@cloudinary/url-gen/qualifiers/format'
 import { Config, Effect, pipe } from 'effect'
 import NextImage from 'next/image'
 import sharp from 'sharp'
 
-const getCloudinaryImage = Effect.fn(function* (src: string) {
-  const url = yield* pipe(
-    Config.string('CLOUDINARY_CLOUD_NAME'),
+const getCloudinaryImage = Effect.fn(function* (
+  src: string,
+  width?: number | string,
+  height?: number | string
+) {
+  const url = yield* Config.string('CLOUDINARY_CLOUD_NAME').pipe(
     Effect.map(cloudName => new Cloudinary({ cloud: { cloudName } })),
-    Effect.map(cloud => cloud.image(src).delivery(format(auto()))),
-    Effect.map(img => img.toURL())
+    Effect.map(cloud =>
+      cloud
+        .image(src)
+        .delivery(Delivery.format(auto()))
+        .resize(height ? Resize.scale().height(height) : Resize.auto())
+        .resize(width ? Resize.scale().width(width) : Resize.auto())
+        .toURL()
+    )
   )
   const meta = yield* pipe(
     Effect.promise(() => fetch(url)),
@@ -30,7 +39,7 @@ type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 
 async function Image({ src, alt, ...props }: ImageProps) {
   const { url, width, height } = await Effect.runPromise(
-    getCloudinaryImage(src)
+    getCloudinaryImage(src, props.width, props.height)
   )
   if (!width || !height) {
     throw new Error('Failed to read image metadata')
