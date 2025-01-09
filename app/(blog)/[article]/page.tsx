@@ -32,17 +32,18 @@ async function Article(props: { params: Promise<{ article: string }> }) {
   }).pipe(runtime.runPromise)
 
   return (
-    <main className="">
+    <main>
       {data.image && (
         <Image
-          className="mx-auto w-fit object-cover md:max-h-96 md:rounded-b-md lg:max-h-115"
+          className="mx-auto md:rounded-b-md"
           priority={true}
           loading="eager"
           src={data.image}
           alt={data.title}
+          height={400}
         />
       )}
-      <div className="prose lg:prose-lg dark:prose-invert mx-auto my-8 px-4 lg:my-16">
+      <div className="prose lg:prose-lg mx-auto my-8 px-4">
         <h1>{data.title}</h1>
         <p className="text-ds-text/40 text-xl font-semibold">
           {data.description}
