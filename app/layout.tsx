@@ -42,7 +42,7 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
         </div>
 
         <Container border-t border-l border-r>
-          <footer className="flex flex-wrap items-center justify-between gap-4 p-4">
+          <footer className="flex flex-wrap items-center justify-between gap-4 p-3.5">
             <nav className="text-ds-text/60 flex flex-wrap gap-2">
               <Link
                 className="hover:underline"
