@@ -1,7 +1,7 @@
 import { FileSystem, Path } from '@effect/platform'
 import { compile, run } from '@mdx-js/mdx'
 import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype'
-import { Chunk, Effect, pipe, Schema, Stream } from 'effect'
+import { Effect, Schema } from 'effect'
 import * as jsxRuntime from 'react/jsx-runtime'
 import yaml from 'yaml'
 
@@ -25,23 +25,6 @@ export const getEntry = <A, I>(schema: Schema.Schema<A, I>) =>
       id: path.parse(filePath).name,
       data: yield* Schema.decode(schema)(frontmatter)
     }
-  })
-
-export const getCollection = <A, I>(schema: Schema.Schema<A, I>) =>
-  Effect.fn(function* (dir: string) {
-    const fs = yield* FileSystem.FileSystem
-    const path = yield* Path.Path
-
-    const fileStream = pipe(
-      Stream.fromIterableEffect(fs.readDirectory(dir)),
-      Stream.filter(f => /\.(mdx|md)$/.test(path.extname(f))),
-      Stream.flatMap(f => getEntry(schema)(path.join(dir, f)))
-    )
-
-    return yield* Effect.map(
-      Stream.runCollect(fileStream),
-      Chunk.toReadonlyArray
-    )
   })
 
 export const render = Effect.fn(function* (content: string) {

@@ -1,19 +1,16 @@
-import { getCollection } from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
-import { ManagedRuntime } from 'effect'
+import { Chunk, ManagedRuntime, Stream } from 'effect'
 import Link from 'next/link'
-import { ArticleScheme } from '../article-scheme'
+import { getArticles } from '../utils.ts'
 
 async function Articles() {
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const entries = await runtime.runPromise(
-    getCollection(ArticleScheme)('app/(blog)/content')
-  )
+  const entries = await runtime.runPromise(Stream.runCollect(getArticles))
 
   return (
     <div className="py-4 lg:p-8">
       <ul className="flex flex-col gap-4">
-        {entries.map(({ data, id }) => (
+        {Chunk.toReadonlyArray(entries).map(({ data, id }) => (
           <li
             className="hover:bg-ds-border/40 border-ds-border group border-y p-4 lg:border-x"
             key={id}
