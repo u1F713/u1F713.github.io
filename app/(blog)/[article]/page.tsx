@@ -1,9 +1,7 @@
 import Image from '@/app/components/Image.tsx'
-import { getEntry, render } from '@/lib/markdown-content/render.ts'
-import { Path } from '@effect/platform'
+import { render } from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
-import { Chunk, Effect, ManagedRuntime, Stream } from 'effect'
-import { ArticleScheme } from '../article-scheme.ts'
+import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
 import { getArticles } from '../utils.ts'
 
 const runtime = ManagedRuntime.make(NodeContext.layer)
@@ -17,12 +15,11 @@ export function generateStaticParams() {
 
 async function Article(props: { params: Promise<{ article: string }> }) {
   const { article } = await props.params
-
   const { data, Content } = await Effect.gen(function* () {
-    const path = yield* Path.Path
-    const filePath = path.join('app/(blog)/content', `${article}.md`)
-    const { data, content } = yield* getEntry(ArticleScheme)(filePath)
-
+    const { data, content } = yield* pipe(
+      Stream.runCollect(Stream.filter(getArticles, _ => _.id === article)),
+      Effect.flatMap(Chunk.get(0))
+    )
     return { data, Content: yield* render(content) }
   }).pipe(runtime.runPromise)
 
