@@ -3,7 +3,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import Container from './container.tsx'
 
 const NavigationLink = ({
   slug,
@@ -25,31 +24,30 @@ function Header() {
   const pathname = usePathname()
 
   return (
-    <div className="sticky top-0">
-      <Container border-r border-b border-l>
-        <header
-          className={clsx(
-            'bg-ds-bg-200/80 mx-auto flex items-center',
-            'justify-between px-4 backdrop-blur-md md:px-10'
-          )}
-        >
-          <Link className="text-lg" href="/">
-            <span className="text-xl font-extrabold">末吉</span>
-          </Link>
+    <div className="border-ds-border sticky top-0 border-b">
+      <header
+        className={clsx(
+          'bg-ds-bg-200/80 mx-auto flex items-center',
+          'justify-between px-4 backdrop-blur-md md:px-10',
+          'border-ds-border mx-auto max-w-screen-xl md:border-x'
+        )}
+      >
+        <Link className="text-lg" href="/">
+          <span className="text-xl font-extrabold">末吉</span>
+        </Link>
 
-          <nav>
-            <ul className="flex">
-              <li>
-                <NavigationLink
-                  href="articles"
-                  slug="Blog"
-                  active={pathname === '/articles'}
-                />
-              </li>
-            </ul>
-          </nav>
-        </header>
-      </Container>
+        <nav>
+          <ul className="flex">
+            <li>
+              <NavigationLink
+                href="articles"
+                slug="Blog"
+                active={pathname === '/articles'}
+              />
+            </li>
+          </ul>
+        </nav>
+      </header>
     </div>
   )
 }

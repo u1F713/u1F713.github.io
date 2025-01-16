@@ -1,9 +1,8 @@
-import ThemeSwitch from '@/features/themes/theme-switch'
+import ThemeSwitch from '@/features/themes/theme-switch.tsx'
 import type { Metadata, NextPage } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { IBM_Plex_Sans_JP } from 'next/font/google'
 import Link from 'next/link'
-import Container from './components/container.tsx'
 import Header from './components/Header.tsx'
 import './globals.css'
 
@@ -35,32 +34,33 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
       <ThemeProvider enableSystem>
         <div>
           <Header />
-
-          <Container h-full border-l border-r>
+          <div className="border-ds-border max mx-auto h-full w-full max-w-screen-xl md:border-x">
             {children}
-          </Container>
+          </div>
         </div>
 
-        <Container border-t border-l border-r>
-          <footer className="flex flex-wrap items-center justify-between gap-4 p-3.5">
-            <nav className="text-ds-text/60 flex flex-wrap gap-2">
-              <Link
-                className="hover:underline"
-                href="https://www.gnu.org/licenses/gpl-3.0.en.html"
-                target="_blank"
-              >
-                &copy; {new Date().getFullYear()} GNU General Public License
-              </Link>
-              <Link
-                className="hover:underline"
-                href="https://github.com/u1F713/u1F713.github.io"
-              >
-                Source Code
-              </Link>
-            </nav>
-            <ThemeSwitch />
-          </footer>
-        </Container>
+        <div className="border-ds-border border-t">
+          <div className="border-ds-border mx-auto w-full max-w-screen-xl p-3 md:border-x">
+            <footer className="flex flex-wrap items-center justify-between gap-4">
+              <nav className="text-ds-text/60 flex flex-wrap gap-2">
+                <Link
+                  className="hover:underline"
+                  href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+                  target="_blank"
+                >
+                  &copy; {new Date().getFullYear()} GNU General Public License
+                </Link>
+                <Link
+                  className="hover:underline"
+                  href="https://github.com/u1F713/u1F713.github.io"
+                >
+                  Source Code
+                </Link>
+              </nav>
+              <ThemeSwitch />
+            </footer>
+          </div>
+        </div>
       </ThemeProvider>
     </body>
   </html>
