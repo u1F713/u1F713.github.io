@@ -1,30 +1,73 @@
 import { NodeContext } from '@effect/platform-node'
-import { Chunk, ManagedRuntime, Stream } from 'effect'
+import clsx from 'clsx'
+import { Chunk, ManagedRuntime, Order, Stream } from 'effect'
 import Link from 'next/link'
+import { ArticleScheme } from '../article-scheme.ts'
 import { getArticles } from '../utils.ts'
 
 async function Articles() {
   const runtime = ManagedRuntime.make(NodeContext.layer)
   const entries = await runtime.runPromise(Stream.runCollect(getArticles))
+  const sortedEntries = Chunk.sort(
+    entries,
+    Order.mapInput(
+      Order.reverse(Order.Date),
+      (article: { data: ArticleScheme }) => article.data.pubDate
+    )
+  ).pipe(Chunk.toReadonlyArray)
 
   return (
-    <div className="py-4 lg:p-8">
-      <ul className="flex flex-col gap-4">
-        {Chunk.toReadonlyArray(entries).map(({ data, id }) => (
-          <li
-            className="hover:bg-ds-border/40 border-ds-border group border-y p-4 lg:border-x"
-            key={id}
-          >
-            <Link href={`/${id}`}>
-              <h3 className="mb-2 text-lg font-bold">{data.title}</h3>
-              <p className="text-ds-text/60 group-hover:text-ds-text">
-                {data.description}
-              </p>
+    <>
+      <h1 className="px-6 py-8 text-2xl font-semibold lg:text-3xl">
+        Chronicles
+      </h1>
+
+      <ul className="grid grid-cols-1 grid-rows-1 gap-[1px] md:grid-cols-2 lg:grid-cols-3">
+        {sortedEntries.map(({ data, id }) => (
+          <li key={id}>
+            <Link href={`/${id}`} about="">
+              <ArticleCard {...data} />{' '}
             </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </>
+  )
+}
+
+function ArticleCard({ title, description, pubDate, tags }: ArticleScheme) {
+  const formattedDatePubDate = new Intl.DateTimeFormat(navigator.language, {
+    dateStyle: 'long'
+  }).format(pubDate)
+
+  return (
+    <article
+      className={clsx(
+        'grid h-full min-h-90 grid-cols-1 grid-rows-[auto_1fr] gap-5 break-words',
+        'hover:bg-ds-border/40 shadow-ds-border group p-6 shadow-[0_0_0_1px]'
+      )}
+    >
+      <section>
+        <h3 className="mb-2 text-xl lg:text-3xl">{title}</h3>
+        <span className="text-ds-text/70 mb-4 font-bold">
+          {formattedDatePubDate}
+        </span>
+      </section>
+
+      <section>
+        <p className="group-hover:text-ds-text">{description}</p>
+        <ul className="mt-4 flex flex-row-reverse flex-wrap gap-2">
+          {tags?.map(tag => (
+            <li
+              key={tag}
+              className="shadow-ds-border rounded-sm p-2 text-sm shadow-[0_0_0_1px]"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </article>
   )
 }
 
