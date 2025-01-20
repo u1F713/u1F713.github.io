@@ -1,16 +1,15 @@
 import ThemeSwitch from '@/features/themes/theme-switch.tsx'
 import type { Metadata, NextPage } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { IBM_Plex_Sans_JP } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import Header from './components/Header.tsx'
 import './globals.css'
 
-const IBM_Plex = IBM_Plex_Sans_JP({
+const inter = Inter({
   display: 'swap',
   subsets: ['latin'],
-  variable: '--font-IBM-Plex-Sans',
-  weight: '400'
+  variable: '--font-inter'
 })
 
 export const metadata: Metadata = {
@@ -29,7 +28,7 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
   */
   <html lang="en" suppressHydrationWarning>
     <body
-      className={`${IBM_Plex.className} bg-ds-bg-200 text-ds-text grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
+      className={`${inter.className} bg-ds-bg-200 text-ds-text grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
     >
       <ThemeProvider enableSystem>
         <div>
