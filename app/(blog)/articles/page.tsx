@@ -18,8 +18,8 @@ async function Articles() {
 
   return (
     <>
-      <h1 className="px-6 py-8 text-2xl font-semibold lg:text-3xl">
-        Chronicles
+      <h1 className="p-4 pt-18 pb-9 text-xl font-semibold lg:p-6 lg:text-2xl">
+        All blog posts
       </h1>
 
       <ul className="grid grid-cols-1 grid-rows-1 gap-[1px] md:grid-cols-2 lg:grid-cols-3">
@@ -43,8 +43,8 @@ function ArticleCard({ title, description, pubDate, tags }: ArticleScheme) {
   return (
     <article
       className={clsx(
-        'grid h-full min-h-90 grid-cols-1 grid-rows-[auto_1fr] gap-5 break-words',
-        'hover:bg-ds-border/40 shadow-ds-border group p-6 shadow-[0_0_0_1px]'
+        'grid h-full min-h-70 grid-cols-1 grid-rows-[auto_1fr] gap-5 break-words lg:min-h-90',
+        'hover:bg-ds-border/40 shadow-ds-border group p-4 shadow-[0_0_0_1px] lg:p-6'
       )}
     >
       <section>
