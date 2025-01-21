@@ -2,9 +2,27 @@ import Image from '@/app/components/Image.tsx'
 import { render } from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
+import type { Metadata } from 'next'
 import { getArticles } from '../utils.ts'
 
 const runtime = ManagedRuntime.make(NodeContext.layer)
+
+type Props = Promise<{
+  article: string
+}>
+
+export async function generateMetadata(props: {
+  params: Props
+}): Promise<Metadata> {
+  const { article } = await props.params
+  const { data } = await pipe(
+    Stream.filter(getArticles, ({ id }) => id === article),
+    Stream.runCollect,
+    Effect.flatMap(Chunk.get(0)),
+    runtime.runPromise
+  )
+  return { title: `${data.title} | u1F713`, description: data.description }
+}
 
 export function generateStaticParams() {
   const articles = Stream.runCollect(
@@ -13,7 +31,7 @@ export function generateStaticParams() {
   return runtime.runPromise(articles).then(Chunk.toArray)
 }
 
-async function Article(props: { params: Promise<{ article: string }> }) {
+async function Article(props: { params: Props }) {
   const { article } = await props.params
   const { data, Content } = await Effect.gen(function* () {
     const { data, content } = yield* pipe(
