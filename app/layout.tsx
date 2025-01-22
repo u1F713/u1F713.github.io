@@ -14,7 +14,15 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'u1F713',
-  description: 'Scarlet Devil Mansion'
+  description: 'Scarlet Devil Mansion',
+  alternates: {
+    canonical: 'https://u1f713.github.io/',
+    types: {
+      'application/rss+xml': [
+        { title: '末吉', url: 'https://u1f713.github.io/feed' }
+      ]
+    }
+  }
 }
 
 type RootProps = Readonly<{
