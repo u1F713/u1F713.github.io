@@ -19,7 +19,7 @@ async function Articles() {
   ).pipe(Chunk.toReadonlyArray)
 
   return (
-    <>
+    <div className="border-ds-border mx-auto h-full w-full max-w-screen-xl md:border-x">
       <div className="flex gap-4 p-4 align-middle">
         <h1 className="text-xl font-semibold lg:text-2xl">All blog posts</h1>
         <Link
@@ -50,7 +50,7 @@ async function Articles() {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }
 

@@ -42,30 +42,42 @@ async function Article(props: { params: Props }) {
   }).pipe(runtime.runPromise)
 
   return (
-    <main>
-      {data.image && (
-        <Image
-          className="mx-auto md:rounded-b-md"
-          priority={true}
-          loading="eager"
-          src={data.image}
-          alt={data.title}
-          height={400}
-        />
-      )}
-      <div className="prose lg:prose-lg mx-auto my-8 px-4">
-        <p>
-          <time dateTime={data.pubDate.toDateString()}>
-            {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
-          </time>
-        </p>
-        <h1>{data.title}</h1>
-        <p className="text-ds-text/40 text-xl font-semibold">
-          {data.description}
-        </p>
-        <Content components={{ img: Image }} />
+    <article>
+      <div className="border-ds-border border-b">
+        <section className="border-ds-border mx-auto max-w-screen-xl md:border-x">
+          {data.image && (
+            <Image
+              className="mx-auto md:rounded-b-md"
+              priority={true}
+              loading="eager"
+              src={data.image}
+              alt={data.title}
+              height={400}
+            />
+          )}
+
+          <div className="px-4 py-8">
+            <div className="prose lg:prose-lg mx-auto">
+              <p>
+                <time dateTime={data.pubDate.toDateString()}>
+                  {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
+                </time>
+              </p>
+              <h1>{data.title}</h1>
+              <p className="text-ds-text/40 text-xl font-semibold">
+                {data.description}
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
-    </main>
+
+      <section className="border-ds-border mx-auto max-w-screen-xl px-4 py-8 md:border-x">
+        <div className="prose lg:prose-lg mx-auto">
+          <Content components={{ img: Image }} />
+        </div>
+      </section>
+    </article>
   )
 }
 

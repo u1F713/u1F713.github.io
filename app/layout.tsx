@@ -41,9 +41,7 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
       <ThemeProvider enableSystem>
         <div>
           <Header />
-          <div className="border-ds-border max mx-auto h-full w-full max-w-screen-xl md:border-x">
-            {children}
-          </div>
+          <main className="h-full">{children}</main>
         </div>
 
         <div className="border-ds-border border-t">
