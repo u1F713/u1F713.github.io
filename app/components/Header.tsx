@@ -24,12 +24,11 @@ function Header() {
   const pathname = usePathname()
 
   return (
-    <div className="border-ds-border sticky top-0 border-b">
+    <div className="border-ds-border bg-ds-bg-200/80 sticky top-0 border-b">
       <header
         className={clsx(
-          'bg-ds-bg-200/80 mx-auto flex items-center',
-          'justify-between px-4 backdrop-blur-md md:px-10',
-          'border-ds-border mx-auto max-w-screen-xl md:border-x'
+          'border-ds-border mx-auto flex px-4 md:border-x md:px-10',
+          'max-w-screen-xl items-center justify-between backdrop-blur-md'
         )}
       >
         <Link className="text-lg" href="/">
