@@ -1,4 +1,4 @@
-import ThemeSwitch from '@/features/themes/theme-switch.tsx'
+import ThemeSwitch from '@/features/theme/ThemeSwitch.tsx'
 import type { Metadata, NextPage } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Inter } from 'next/font/google'
