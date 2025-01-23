@@ -54,6 +54,11 @@ async function Article(props: { params: Props }) {
         />
       )}
       <div className="prose lg:prose-lg mx-auto my-8 px-4">
+        <p>
+          <time dateTime={data.pubDate.toDateString()}>
+            {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
+          </time>
+        </p>
         <h1>{data.title}</h1>
         <p className="text-ds-text/40 text-xl font-semibold">
           {data.description}
