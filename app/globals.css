@@ -1,27 +1,14 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
-@variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+@variant dark (&:where(.dark, .dark *));
 @layer theme, base, components, utilities;
 
-@layer theme {
-  :root {
-    --ds-white: oklch(98.51% 0 0);
-    --ds-black: oklch(14.08% 0 0);
-  }
-
-  [data-theme='dark'] {
-    --ds-text-color: oklch(98.51% 0 0);
-    --ds-border-color: oklch(24.27% 0 0);
-    --ds-bg-100: oklch(from var(--ds-black) 18% c h);
-    --ds-bg-200: var(--ds-black);
-
-    .shiki,
-    .shiki span {
-      color: var(--shiki-dark) !important;
-      background-color: var(--shiki-dark-bg) !important;
-    }
-  }
+@theme {
+  --color-ds-text: var(--ds-text-color, oklch(32.28% 0.0313 250.5));
+  --color-ds-border: var(--ds-border-color, oklch(90.06% 0 0));
+  --color-ds-bg-100: var(--ds-bg-100, oklch(98.51% 0 0));
+  --color-ds-bg-200: var(--ds-bg-200, oklch(100% 0 0));
 }
 
 @layer utilities {
@@ -42,15 +29,4 @@
     --tw-prose-pre-bg: transparent;
     --tw-prose-bold: currentcolor;
   }
-}
-
-@theme {
-  --color-ds-text: var(--ds-text-color, oklch(32.28% 0.0313 250.5));
-  --color-ds-border: var(--ds-border-color, oklch(90.06% 0 0));
-  --color-ds-bg-100: var(--ds-bg-100, oklch(98.51% 0 0));
-  --color-ds-bg-200: var(--ds-bg-200, oklch(100% 0 0));
-}
-
-:root {
-  color-scheme: dark light;
 }

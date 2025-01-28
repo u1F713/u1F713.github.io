@@ -1,6 +1,5 @@
-import ThemeSwitch from '@/features/theme/ThemeSwitch.tsx'
+import { ThemeProvider } from '@/features/theme/ThemeContext.tsx'
 import type { Metadata, NextPage } from 'next'
-import { ThemeProvider } from 'next-themes'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import Header from './components/Header.tsx'
@@ -38,7 +37,7 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
     <body
       className={`${inter.className} bg-ds-bg-200 text-ds-text grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
     >
-      <ThemeProvider enableSystem>
+      <ThemeProvider>
         <div>
           <Header />
           <main className="h-full">{children}</main>
@@ -62,7 +61,6 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
                   Source Code
                 </Link>
               </nav>
-              <ThemeSwitch />
             </footer>
           </div>
         </div>

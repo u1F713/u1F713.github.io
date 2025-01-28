@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+
+@layer theme {
+  :root {
+    @apply scheme-light;
+    --ds-white: oklch(98.51% 0 0);
+    --ds-black: oklch(14.08% 0 0);
+  }
+
+  .dark {
+    @apply scheme-dark;
+    --ds-text-color: oklch(98.51% 0 0);
+    --ds-border-color: oklch(24.27% 0 0);
+    --ds-bg-100: oklch(from var(--ds-black) 18% c h);
+    --ds-bg-200: var(--ds-black);
+  }
+
+  .toggle-theme {
+    mask-size: 100% 100%;
+    display: inline-block;
+    background: currentColor;
+    color: currentColor;
+    mask: url(./assets/sun.svg);
+  }
+  .dark .toggle-theme {
+    mask: url(./assets/moon.svg);
+  }
+
+  .dark .shiki,
+  .dark .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}

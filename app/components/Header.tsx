@@ -1,5 +1,6 @@
 'use client'
 
+import ThemeSwitch from '@/features/theme/ThemeSwitch.tsx'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -35,7 +36,7 @@ function Header() {
           <span className="text-xl font-extrabold">末吉</span>
         </Link>
 
-        <nav>
+        <nav className="text-ds-text/70 grid grid-flow-col content-between items-center gap-8">
           <ul className="flex">
             <li>
               <NavigationLink
@@ -45,6 +46,7 @@ function Header() {
               />
             </li>
           </ul>
+          <ThemeSwitch />
         </nav>
       </header>
     </div>
