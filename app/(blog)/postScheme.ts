@@ -1,6 +1,6 @@
 import { Schema as S } from 'effect'
 
-export const ArticleScheme = S.Struct({
+export const PostScheme = S.Struct({
   title: S.String,
   description: S.String,
   pubDate: S.Date,
@@ -9,4 +9,4 @@ export const ArticleScheme = S.Struct({
   tags: S.String.pipe(S.Array, S.optional)
 })
 
-export type ArticleScheme = typeof ArticleScheme.Type
+export type PostScheme = typeof PostScheme.Type

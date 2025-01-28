@@ -40,9 +40,9 @@ function Header() {
           <ul className="flex">
             <li>
               <NavigationLink
-                href="articles"
+                href="posts"
                 slug="Blog"
-                active={pathname === '/articles'}
+                active={pathname === '/posts'}
               />
             </li>
           </ul>

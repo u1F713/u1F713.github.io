@@ -3,18 +3,18 @@ import clsx from 'clsx'
 import { Chunk, ManagedRuntime, Order, Stream } from 'effect'
 import NextImage from 'next/image'
 import Link from 'next/link'
-import { ArticleScheme } from '../article-scheme.ts'
 import atomSVG from '../assets/atom-feed.svg'
-import { getArticles } from '../utils.ts'
+import { PostScheme } from '../postScheme.ts'
+import { getPost } from '../utils.ts'
 
-async function Articles() {
+async function Posts() {
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const entries = await runtime.runPromise(Stream.runCollect(getArticles))
+  const entries = await runtime.runPromise(Stream.runCollect(getPost))
   const sortedEntries = Chunk.sort(
     entries,
     Order.mapInput(
       Order.reverse(Order.Date),
-      (article: { data: ArticleScheme }) => article.data.pubDate
+      (posts: { data: PostScheme }) => posts.data.pubDate
     )
   ).pipe(Chunk.toReadonlyArray)
 
@@ -54,7 +54,7 @@ async function Articles() {
   )
 }
 
-function ArticleCard({ title, description, pubDate, tags }: ArticleScheme) {
+function ArticleCard({ title, description, pubDate, tags }: PostScheme) {
   const formattedDatePubDate = new Intl.DateTimeFormat(navigator.language, {
     dateStyle: 'long'
   }).format(pubDate)
@@ -90,4 +90,4 @@ function ArticleCard({ title, description, pubDate, tags }: ArticleScheme) {
   )
 }
 
-export default Articles
+export default Posts

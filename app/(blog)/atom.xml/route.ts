@@ -1,14 +1,14 @@
 import { render } from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, Order, Stream } from 'effect'
-import { ArticleScheme } from '../article-scheme.ts'
-import { getArticles } from '../utils.ts'
+import { PostScheme } from '../postScheme.ts'
+import { getPost } from '../utils.ts'
 
 export async function GET() {
   const { renderToStaticMarkup } = await import('react-dom/server')
 
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const articleTask = getArticles.pipe(
+  const postsTask = getPost.pipe(
     Stream.mapEffect(
       Effect.fn(function* ({ id, data, content }) {
         const Content = yield* render(content)
@@ -20,13 +20,13 @@ export async function GET() {
       Chunk.sort(
         Order.mapInput(
           Order.reverse(Order.Date),
-          (article: { data: ArticleScheme }) => article.data.pubDate
+          (article: { data: PostScheme }) => article.data.pubDate
         )
       )
     ),
     Effect.map(Chunk.toReadonlyArray)
   )
-  const articles = await runtime.runPromise(articleTask)
+  const posts = await runtime.runPromise(postsTask)
 
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>
@@ -35,12 +35,12 @@ export async function GET() {
     <subtitle>u1F713's Blog</subtitle>
     <link href="https://u1f713.github.io/feed/" rel="self"/>
     <link href="https://u1f713.github.io/"/>
-    <updated>${articles[0].data.pubDate}</updated>
+    <updated>${posts[0].data.pubDate}</updated>
     <author>
 	   <name>Nyarlathotep</name>
 	   <email>anhedonia@skiff.com</email>
     </author>
-    ${articles.reduce(
+    ${posts.reduce(
       (acc, { id, data, content }) =>
         `${acc}
          <entry>

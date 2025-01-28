@@ -4,20 +4,20 @@ import { render } from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
 import type { Metadata } from 'next'
-import { getArticles } from '../utils.ts'
+import { getPost } from '../utils.ts'
 
 const runtime = ManagedRuntime.make(NodeContext.layer)
 
 type Props = Promise<{
-  article: string
+  postId: string
 }>
 
 export async function generateMetadata(props: {
   params: Props
 }): Promise<Metadata> {
-  const { article } = await props.params
+  const { postId } = await props.params
   const { data } = await pipe(
-    Stream.filter(getArticles, ({ id }) => id === article),
+    Stream.filter(getPost, ({ id }) => id === postId),
     Stream.runCollect,
     Effect.flatMap(Chunk.get(0)),
     runtime.runPromise
@@ -26,17 +26,15 @@ export async function generateMetadata(props: {
 }
 
 export function generateStaticParams() {
-  const articles = Stream.runCollect(
-    Stream.map(getArticles, _ => ({ article: _.id }))
-  )
-  return runtime.runPromise(articles).then(Chunk.toArray)
+  const posts = Stream.runCollect(Stream.map(getPost, _ => ({ postId: _.id })))
+  return runtime.runPromise(posts).then(Chunk.toArray)
 }
 
-async function Article(props: { params: Props }) {
-  const { article } = await props.params
+async function Posts(props: { params: Props }) {
+  const { postId } = await props.params
   const { data, Content } = await Effect.gen(function* () {
     const { data, content } = yield* pipe(
-      Stream.runCollect(Stream.filter(getArticles, _ => _.id === article)),
+      Stream.runCollect(Stream.filter(getPost, _ => _.id === postId)),
       Effect.flatMap(Chunk.get(0))
     )
     return { data, Content: yield* render(content, [Rehype.plugin]) }
@@ -83,4 +81,4 @@ async function Article(props: { params: Props }) {
 }
 
 export const dynamicParams = false
-export default Article
+export default Posts
