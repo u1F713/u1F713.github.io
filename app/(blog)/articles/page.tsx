@@ -24,7 +24,7 @@ async function Articles() {
         <h1 className="text-xl font-semibold lg:text-2xl">All blog posts</h1>
         <a
           className="hover:bg-ds-border/80 group relative rounded-sm p-2"
-          href="/feed"
+          href="/atom.xml"
           target="_blank"
         >
           <NextImage width={16} src={atomSVG} alt="web feed" />
