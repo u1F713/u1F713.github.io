@@ -22,7 +22,7 @@ async function Articles() {
     <div className="border-ds-border mx-auto h-full w-full max-w-screen-xl md:border-x">
       <div className="flex gap-4 p-4 align-middle">
         <h1 className="text-xl font-semibold lg:text-2xl">All blog posts</h1>
-        <Link
+        <a
           className="hover:bg-ds-border/80 group relative rounded-sm p-2"
           href="/feed"
           target="_blank"
@@ -38,7 +38,7 @@ async function Articles() {
           >
             Web feed
           </span>
-        </Link>
+        </a>
       </div>
 
       <ul className="grid grid-cols-1 grid-rows-1 gap-[1px] md:grid-cols-2 lg:grid-cols-3">
