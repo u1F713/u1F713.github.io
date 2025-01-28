@@ -1,8 +1,8 @@
 import { FileSystem, Path } from '@effect/platform'
 import { compile, run } from '@mdx-js/mdx'
-import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype'
-import { Effect, Schema } from 'effect'
+import { Effect, pipe, Schema } from 'effect'
 import * as jsxRuntime from 'react/jsx-runtime'
+import { Plugin } from 'unified'
 import yaml from 'yaml'
 
 const readFile = Effect.fn(function* (filePath: string) {
@@ -27,23 +27,18 @@ export const getEntry = <A, I>(schema: Schema.Schema<A, I>) =>
     }
   })
 
-export const render = Effect.fn(function* (content: string) {
-  const rehypeOptions: RehypeShikiOptions = {
-    themes: {
-      light: 'github-light-high-contrast',
-      dark: 'github-dark-high-contrast'
-    },
-    addLanguageClass: true,
-    tabindex: false,
-    inline: 'tailing-curly-colon'
-  }
-  const compiled = yield* Effect.promise(() =>
-    compile(content, {
-      outputFormat: 'function-body',
-      rehypePlugins: [[rehypeShiki, rehypeOptions]]
-    })
+export const render = (
+  content: Readonly<string>,
+  plugins?: Readonly<Plugin>[]
+) =>
+  pipe(
+    Effect.promise(() =>
+      compile(content, {
+        outputFormat: 'function-body',
+        rehypePlugins: plugins
+      })
+    ),
+    Effect.flatMap(compiled =>
+      Effect.promise(() => run(compiled, jsxRuntime).then(_ => _.default))
+    )
   )
-  return yield* Effect.promise(() =>
-    run(compiled, jsxRuntime).then(_ => _.default)
-  )
-})

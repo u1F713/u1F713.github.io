@@ -1,4 +1,5 @@
 import Image from '@/app/components/Image.tsx'
+import { Rehype } from '@/lib/markdown-content/index.ts'
 import { render } from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
@@ -38,7 +39,7 @@ async function Article(props: { params: Props }) {
       Stream.runCollect(Stream.filter(getArticles, _ => _.id === article)),
       Effect.flatMap(Chunk.get(0))
     )
-    return { data, Content: yield* render(content) }
+    return { data, Content: yield* render(content, [Rehype.plugin]) }
   }).pipe(runtime.runPromise)
 
   return (
