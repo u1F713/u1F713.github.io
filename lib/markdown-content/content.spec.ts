@@ -2,7 +2,7 @@ import { FileSystem } from '@effect/platform'
 import { NodeContext } from '@effect/platform-node'
 import { describe, expect, it } from '@effect/vitest'
 import { Chunk, Effect, pipe, Schema, Stream } from 'effect'
-import { compileContent, parseFrontmatter } from './render.ts'
+import { compileContent, parseFrontmatter } from './compiler.ts'
 import { getContent } from './stream.ts'
 
 describe('compiler test-suite', () => {

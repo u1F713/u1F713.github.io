@@ -1,9 +1,10 @@
 import Image from '@/app/components/Image.tsx'
-import { getContent, Rehype } from '@/lib/markdown-content/index.ts'
 import {
   compileContent,
-  parseFrontmatter
-} from '@/lib/markdown-content/render.ts'
+  getContent,
+  parseFrontmatter,
+  Rehype
+} from '@/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
 import type { Metadata } from 'next'
