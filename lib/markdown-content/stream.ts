@@ -13,5 +13,13 @@ export const getContent = (directoryPath: string) =>
     ),
     Stream.mapEffect(f =>
       Effect.map(Path.Path, path => path.join(directoryPath, f))
+    ),
+    Stream.mapEffect(filePath =>
+      Effect.zip(
+        Effect.map(Path.Path, path => path.parse(filePath).name),
+        Effect.flatMap(FileSystem.FileSystem, fs =>
+          fs.readFileString(filePath, 'utf8')
+        )
+      )
     )
   )

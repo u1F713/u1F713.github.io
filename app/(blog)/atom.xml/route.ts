@@ -1,32 +1,39 @@
-import { render } from '@/lib/markdown-content/render.ts'
+import {
+  compileContent,
+  getContent,
+  parseFrontmatter
+} from '@/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
-import { Chunk, Effect, ManagedRuntime, Order, Stream } from 'effect'
+import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
 import { PostScheme } from '../postScheme.ts'
-import { getPost } from '../utils.ts'
 
 export async function GET() {
   const { renderToStaticMarkup } = await import('react-dom/server')
-
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const postsTask = getPost.pipe(
-    Stream.mapEffect(
-      Effect.fn(function* ({ id, data, content }) {
-        const Content = yield* render(content)
-        return { id, data, content: renderToStaticMarkup(Content({})) }
-      })
-    ),
-    Stream.runCollect,
-    Effect.map(
-      Chunk.sort(
-        Order.mapInput(
-          Order.reverse(Order.Date),
-          (article: { data: PostScheme }) => article.data.pubDate
-        )
+  const order = Order.mapInput(
+    Order.reverse(Order.Date),
+    (posts: { data: PostScheme }) => posts.data.pubDate
+  )
+
+  const posts = await pipe(
+    getContent('app/(blog)/content'),
+    Stream.flatMap(([id, content]) =>
+      Effect.zipWith(
+        parseFrontmatter(PostScheme)(content),
+        compileContent(content),
+        (data, Content) => ({
+          id,
+          data,
+          Content: renderToStaticMarkup(Content({}))
+        }),
+        { concurrent: true }
       )
     ),
-    Effect.map(Chunk.toReadonlyArray)
+    Stream.runCollect,
+    Effect.map(Chunk.sort(order)),
+    Effect.map(Chunk.toReadonlyArray),
+    runtime.runPromise
   )
-  const posts = await runtime.runPromise(postsTask)
 
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>
@@ -41,7 +48,7 @@ export async function GET() {
 	   <email>anhedonia@skiff.com</email>
     </author>
     ${posts.reduce(
-      (acc, { id, data, content }) =>
+      (acc, { id, data, Content }) =>
         `${acc}
          <entry>
             <id>${id}</id>
@@ -49,7 +56,7 @@ export async function GET() {
             <link href="https://u1f713.github.io/${id}"/>
             <updated>${data.updatedDate ?? data.pubDate}</updated>
             <content type="text/html">
-              ${content}
+              ${Content}
             </content>
           </entry>`,
       ''

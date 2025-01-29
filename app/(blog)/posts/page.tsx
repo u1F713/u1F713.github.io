@@ -1,22 +1,30 @@
+import { getContent, parseFrontmatter } from '@/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
 import clsx from 'clsx'
-import { Chunk, ManagedRuntime, Order, Stream } from 'effect'
+import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import atomSVG from '../assets/atom-feed.svg'
 import { PostScheme } from '../postScheme.ts'
-import { getPost } from '../utils.ts'
 
 async function Posts() {
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const entries = await runtime.runPromise(Stream.runCollect(getPost))
-  const sortedEntries = Chunk.sort(
-    entries,
-    Order.mapInput(
-      Order.reverse(Order.Date),
-      (posts: { data: PostScheme }) => posts.data.pubDate
-    )
-  ).pipe(Chunk.toReadonlyArray)
+  const order = Order.mapInput(
+    Order.reverse(Order.Date),
+    (posts: PostScheme) => posts.pubDate
+  )
+  const posts = await pipe(
+    getContent('app/(blog)/content'),
+    Stream.flatMap(([id, content]) =>
+      Effect.map(parseFrontmatter(PostScheme)(content), data => ({
+        ...data,
+        id
+      }))
+    ),
+    Stream.runCollect,
+    Effect.map(Chunk.sort(order)),
+    runtime.runPromise
+  )
 
   return (
     <div className="border-ds-border mx-auto h-full w-full max-w-screen-xl md:border-x">
@@ -42,7 +50,7 @@ async function Posts() {
       </div>
 
       <ul className="grid grid-cols-1 grid-rows-1 gap-[1px] md:grid-cols-2 lg:grid-cols-3">
-        {sortedEntries.map(({ data, id }) => (
+        {Chunk.toArray(posts).map(({ id, ...data }) => (
           <li key={id}>
             <Link href={`/${id}`} about="">
               <ArticleCard {...data} />{' '}

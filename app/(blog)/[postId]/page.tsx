@@ -1,44 +1,63 @@
 import Image from '@/app/components/Image.tsx'
-import { Rehype } from '@/lib/markdown-content/index.ts'
-import { render } from '@/lib/markdown-content/render.ts'
+import { getContent, Rehype } from '@/lib/markdown-content/index.ts'
+import {
+  compileContent,
+  parseFrontmatter
+} from '@/lib/markdown-content/render.ts'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
 import type { Metadata } from 'next'
-import { getPost } from '../utils.ts'
-
-const runtime = ManagedRuntime.make(NodeContext.layer)
+import { PostScheme } from '../postScheme.ts'
 
 type Props = Promise<{
   postId: string
 }>
 
+const runtime = ManagedRuntime.make(NodeContext.layer)
+
+export function generateStaticParams() {
+  const posts = pipe(
+    getContent('app/(blog)/content'),
+    Stream.map(([postId]) => ({ postId })),
+    Stream.runCollect,
+    Effect.map(Chunk.toArray)
+  )
+  return runtime.runPromise(posts)
+}
+
 export async function generateMetadata(props: {
   params: Props
 }): Promise<Metadata> {
   const { postId } = await props.params
-  const { data } = await pipe(
-    Stream.filter(getPost, ({ id }) => id === postId),
+  const { title, description } = await pipe(
+    getContent('app/(blog)/content'),
+    Stream.filter(([id]) => id === postId),
+    Stream.flatMap(([, content]) => parseFrontmatter(PostScheme)(content)),
     Stream.runCollect,
     Effect.flatMap(Chunk.get(0)),
     runtime.runPromise
   )
-  return { title: `${data.title} | u1F713`, description: data.description }
-}
-
-export function generateStaticParams() {
-  const posts = Stream.runCollect(Stream.map(getPost, _ => ({ postId: _.id })))
-  return runtime.runPromise(posts).then(Chunk.toArray)
+  return { title: `${title} | u1F713`, description: description }
 }
 
 async function Posts(props: { params: Props }) {
   const { postId } = await props.params
-  const { data, Content } = await Effect.gen(function* () {
-    const { data, content } = yield* pipe(
-      Stream.runCollect(Stream.filter(getPost, _ => _.id === postId)),
-      Effect.flatMap(Chunk.get(0))
-    )
-    return { data, Content: yield* render(content, [Rehype.plugin]) }
-  }).pipe(runtime.runPromise)
+
+  const { data, Content } = await pipe(
+    getContent('app/(blog)/content'),
+    Stream.filter(([id]) => id === postId),
+    Stream.flatMap(([id, content]) =>
+      Effect.zipWith(
+        parseFrontmatter(PostScheme)(content),
+        compileContent(content, [Rehype.plugin]),
+        (data, Content) => ({ id, data, Content }),
+        { concurrent: true }
+      )
+    ),
+    Stream.runCollect,
+    Effect.flatMap(Chunk.get(0)),
+    runtime.runPromise
+  )
 
   return (
     <article>
