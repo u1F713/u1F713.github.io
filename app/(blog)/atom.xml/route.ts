@@ -1,7 +1,9 @@
 import {
   compileContent,
   getContent,
-  parseFrontmatter
+  getContentID,
+  parseFrontmatter,
+  readContentDirectory
 } from '@/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
@@ -10,27 +12,26 @@ import { PostScheme } from '../postScheme.ts'
 export async function GET() {
   const { renderToStaticMarkup } = await import('react-dom/server')
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const order = Order.mapInput(
+  const postsOrder = Order.mapInput(
     Order.reverse(Order.Date),
-    (posts: { data: PostScheme }) => posts.data.pubDate
+    (post: { data: PostScheme }) => post.data.pubDate
   )
-
   const posts = await pipe(
-    getContent('app/(blog)/content'),
-    Stream.flatMap(([id, content]) =>
-      Effect.zipWith(
-        parseFrontmatter(PostScheme)(content),
-        compileContent(content),
-        (data, Content) => ({
-          id,
-          data,
+    readContentDirectory('app/(blog)/content'),
+    Stream.mapEffect(
+      Effect.fn(function* (filename) {
+        const file = yield* getContent(filename)
+        const Content = yield* compileContent(file)
+
+        return {
+          id: yield* getContentID(filename),
+          data: yield* parseFrontmatter(PostScheme)(file),
           Content: renderToStaticMarkup(Content({}))
-        }),
-        { concurrent: true }
-      )
+        }
+      })
     ),
     Stream.runCollect,
-    Effect.map(Chunk.sort(order)),
+    Effect.map(Chunk.sort(postsOrder)),
     Effect.map(Chunk.toReadonlyArray),
     runtime.runPromise
   )

@@ -1,4 +1,9 @@
-import { getContent, parseFrontmatter } from '@/lib/markdown-content'
+import {
+  getContent,
+  getContentID,
+  parseFrontmatter,
+  readContentDirectory
+} from '@/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
 import clsx from 'clsx'
 import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
@@ -9,20 +14,25 @@ import { PostScheme } from '../postScheme.ts'
 
 async function Posts() {
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const order = Order.mapInput(
+
+  const postsOrder = Order.mapInput(
     Order.reverse(Order.Date),
-    (posts: PostScheme) => posts.pubDate
+    (post: { data: PostScheme }) => post.data.pubDate
   )
-  const posts = await pipe(
-    getContent('app/(blog)/content'),
-    Stream.flatMap(([id, content]) =>
-      Effect.map(parseFrontmatter(PostScheme)(content), data => ({
-        ...data,
-        id
-      }))
-    ),
+  const getPost = pipe(
+    readContentDirectory('app/(blog)/content'),
+    Stream.flatMap(filename =>
+      Stream.zipWith(
+        getContentID(filename),
+        Effect.flatMap(getContent(filename), parseFrontmatter(PostScheme)),
+        (id, data) => ({ id, data })
+      )
+    )
+  )
+
+  const posts = await getPost.pipe(
     Stream.runCollect,
-    Effect.map(Chunk.sort(order)),
+    Effect.map(Chunk.sort(postsOrder)),
     runtime.runPromise
   )
 
@@ -50,7 +60,7 @@ async function Posts() {
       </div>
 
       <ul className="grid grid-cols-1 grid-rows-1 gap-[1px] md:grid-cols-2 lg:grid-cols-3">
-        {Chunk.toArray(posts).map(({ id, ...data }) => (
+        {Chunk.toArray(posts).map(({ id, data }) => (
           <li key={id}>
             <Link href={`/${id}`} about="">
               <ArticleCard {...data} />{' '}
