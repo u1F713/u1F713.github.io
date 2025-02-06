@@ -7,9 +7,7 @@ import {
 import { NodeContext } from '@effect/platform-node'
 import clsx from 'clsx'
 import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
-import NextImage from 'next/image'
 import Link from 'next/link'
-import atomSVG from '../assets/atom-feed.svg'
 import { PostScheme } from '../postScheme.ts'
 
 async function Posts() {
@@ -40,23 +38,6 @@ async function Posts() {
     <div className="border-ds-border mx-auto h-full w-full max-w-screen-xl md:border-x">
       <div className="flex gap-4 p-4 align-middle">
         <h1 className="text-xl font-semibold lg:text-2xl">All blog posts</h1>
-        <a
-          className="hover:bg-ds-border/80 group relative rounded-sm p-2"
-          href="/atom.xml"
-          target="_blank"
-        >
-          <NextImage width={16} src={atomSVG} alt="web feed" />
-          <span
-            className={clsx(
-              'group-hover:bg-ds-border/80 pointer-events-none invisible absolute group-hover:visible',
-              'rounded-sm p-1 text-xs whitespace-nowrap opacity-0 duration-120 group-hover:opacity-100',
-              '-translate-x-[calc(50%-8px)] translate-y-2 group-hover:translate-y-1/2'
-            )}
-            role="dialog"
-          >
-            Web feed
-          </span>
-        </a>
       </div>
 
       <ul className="grid grid-cols-1 grid-rows-1 gap-[1px] md:grid-cols-2 lg:grid-cols-3">
