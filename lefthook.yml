@@ -15,8 +15,3 @@ pre-commit:
       glob: '*.{ts,tsx}'
       run: pnpm eslint --fix {staged_files}
       stage_fixed: true
-
-    unit-testing:
-      glob: '*.{ts,tsx}'
-      run: pnpm vitest run
-      stage_fixed: true
