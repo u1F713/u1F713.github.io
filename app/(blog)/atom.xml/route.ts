@@ -1,3 +1,4 @@
+import { generateAtomFeed } from '@/features/atom-feed'
 import {
   compileContent,
   getContent,
@@ -36,39 +37,30 @@ export async function GET() {
     runtime.runPromise
   )
 
-  return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>
-    <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>u1F713</title>
-    <subtitle>u1F713's Blog</subtitle>
-    <link href="https://u1f713.github.io/feed/" rel="self"/>
-    <link href="https://u1f713.github.io/"/>
-    <updated>${posts[0].data.pubDate}</updated>
-    <author>
-	   <name>Nyarlathotep</name>
-	   <email>anhedonia@skiff.com</email>
-    </author>
-    ${posts.reduce(
-      (acc, { id, data, Content }) =>
-        `${acc}
-         <entry>
-            <id>${id}</id>
-            <title>${data.title}</title>
-            <link href="https://u1f713.github.io/${id}"/>
-            <updated>${data.updatedDate ?? data.pubDate}</updated>
-            <content type="text/html">
-              ${Content}
-            </content>
-          </entry>`,
-      ''
-    )}
-    </feed>`,
-    {
-      headers: {
-        'Content-Type': 'application/atom+xml; charset=utf-8'
-      }
-    }
+  const feed = await runtime.runPromise(
+    generateAtomFeed({
+      title: 'u1F713',
+      subtitle: "u1F713's Blog",
+      links: {
+        canonical: 'https://u1f713.github.io',
+        self: 'https://u1f713.github.io/atom.xml'
+      },
+      author: { name: 'Nyarlathotep', email: 'anhedonia@skiff.com' },
+      entries: posts.map(({ id, data, Content }) => ({
+        id,
+        title: data.title,
+        link: `https://u1f713.github.io/${id}`,
+        updated: data.updatedDate ?? data.pubDate,
+        content: Content
+      }))
+    })
   )
+
+  return new Response(feed, {
+    headers: {
+      'Content-Type': 'application/atom+xml; charset=utf-8'
+    }
+  })
 }
 
 export const dynamic = 'force-static'
