@@ -1,0 +1,15 @@
+name: Run CI
+on: [push, pull_request]
+
+jobs:
+  unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: pnpm install
+        run: nix develop -c pnpm install
+
+      - name: run vitest
+        run: nix develop -c pnpm vitest
