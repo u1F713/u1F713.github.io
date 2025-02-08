@@ -4,6 +4,11 @@ on: [push, pull_request]
 jobs:
   unit-testing:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    env:
+      BASE_PATH: ${{vars.BASE_PATH}}
+      CLOUDINARY_CLOUD_NAME: ${{vars.CLOUDINARY_CLOUD_NAME}}
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
