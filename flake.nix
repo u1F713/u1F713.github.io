@@ -14,7 +14,7 @@
           devShells.default = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
               nodejs_22
-              pnpm
+              (pnpm.override { nodejs = nodejs_22; })
             ];
           };
           formatter = pkgs.nixfmt-rfc-style;
