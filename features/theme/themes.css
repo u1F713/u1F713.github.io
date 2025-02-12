@@ -3,16 +3,12 @@
 @layer theme {
   :root {
     @apply scheme-light;
-    --ds-white: oklch(98.51% 0 0);
-    --ds-black: oklch(14.08% 0 0);
   }
 
   .dark {
     @apply scheme-dark;
-    --ds-text-color: oklch(98.51% 0 0);
-    --ds-border-color: oklch(24.27% 0 0);
-    --ds-bg-100: oklch(from var(--ds-black) 18% c h);
-    --ds-bg-200: var(--ds-black);
+    --dn-color-200: oklch(96.75% 0.0168 270);
+    --dn-surface-200: oklch(9.9% 0.0434 263.49);
   }
 
   .toggle-theme {

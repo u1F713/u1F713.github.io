@@ -5,27 +5,30 @@
 @layer theme, base, components, utilities;
 
 @theme {
-  --color-ds-text: var(--ds-text-color, oklch(32.28% 0.0313 250.5));
-  --color-ds-border: var(--ds-border-color, oklch(90.06% 0 0));
-  --color-ds-bg-100: var(--ds-bg-100, oklch(98.51% 0 0));
-  --color-ds-bg-200: var(--ds-bg-200, oklch(100% 0 0));
+  --color-dn-color-200: var(--dn-color-200, oklch(29.71% 0.1616 263.65));
+  --color-dn-surface-200: var(--dn-surface-200, oklch(99.4% 0 24.04));
+  --color-dn-border: color-mix(
+    in oklab,
+    var(--color-dn-color-200) 40%,
+    var(--color-dn-surface-200)
+  );
 }
 
 @layer utilities {
   .prose {
-    --tw-prose-body: var(--ds-text-color);
-    --tw-prose-headings: var(--ds-text-color);
-    --tw-prose-lead: var(--ds-text-color);
-    --tw-prose-links: var(--ds-text-color);
-    --tw-prose-counters: var(--ds-text-color);
-    --tw-prose-bullets: var(--ds-text-color);
-    --tw-prose-quotes: var(--ds-text-color);
-    --tw-prose-quote-borders: var(--ds-text-color);
-    --tw-prose-captions: var(--ds-text-color);
-    --tw-prose-th-borders: var(--ds-text-color);
-    --tw-prose-td-borders: var(--ds-text-color);
-    --tw-prose-pre-code: var(--ds-text-color);
-    --tw-prose-code: var(--ds-text-color);
+    --tw-prose-body: var(--dn-color-color);
+    --tw-prose-headings: var(--dn-color-color);
+    --tw-prose-lead: var(--dn-color-color);
+    --tw-prose-links: var(--dn-color-color);
+    --tw-prose-counters: var(--dn-color-color);
+    --tw-prose-bullets: var(--dn-color-color);
+    --tw-prose-quotes: var(--dn-color-color);
+    --tw-prose-quote-borders: var(--dn-color-color);
+    --tw-prose-captions: var(--dn-color-color);
+    --tw-prose-th-borders: var(--dn-color-color);
+    --tw-prose-td-borders: var(--dn-color-color);
+    --tw-prose-pre-code: var(--dn-color-color);
+    --tw-prose-code: var(--dn-color-color);
     --tw-prose-pre-bg: transparent;
     --tw-prose-bold: currentcolor;
   }

@@ -35,7 +35,7 @@ export default async function Posts() {
   )
 
   return (
-    <div className="border-ds-border mx-auto h-full w-full max-w-screen-xl md:border-x">
+    <div className="border-dn-border mx-auto h-full w-full max-w-screen-xl md:border-x">
       <h1 className="px-4 py-10 text-3xl font-semibold lg:px-6 lg:text-5xl">
         Blog posts
       </h1>
@@ -57,7 +57,7 @@ const ArticleCard = ({ title, description, pubDate, tags }: PostScheme) => (
   <article
     className={clsx(
       'grid h-full min-h-70 grid-cols-1 grid-rows-[auto_1fr] gap-5 break-words lg:min-h-90',
-      'hover:bg-ds-border/40 shadow-ds-border group p-4 shadow-[0_0_0_1px] lg:p-6'
+      'hover:bg-dn-border/40 shadow-dn-border group p-4 shadow-[0_0_0_1px] lg:p-6'
     )}
   >
     <section>
@@ -68,16 +68,16 @@ const ArticleCard = ({ title, description, pubDate, tags }: PostScheme) => (
       </p>
 
       <h3 className="text-2xl lg:text-3xl">{title}</h3>
-      <span className="text-ds-text/70 mb-4 font-bold"></span>
+      <span className="text-dn-color/70 mb-4 font-bold"></span>
     </section>
 
     <section>
-      <p className="group-hover:text-ds-text">{description}</p>
+      <p className="group-hover:text-dn-color">{description}</p>
       <ul className="mt-4 flex flex-row-reverse flex-wrap gap-2">
         {tags?.map(tag => (
           <li
             key={tag}
-            className="shadow-ds-border rounded-sm p-2 text-sm shadow-[0_0_0_1px]"
+            className="shadow-dn-border rounded-sm p-2 text-sm shadow-[0_0_0_1px]"
           >
             {tag}
           </li>

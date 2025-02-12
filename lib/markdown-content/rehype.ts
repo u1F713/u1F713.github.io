@@ -6,7 +6,7 @@ const rehypeOptions: RehypeShikiOptions = {
   inline: 'tailing-curly-colon',
   themes: {
     light: 'github-light-high-contrast',
-    dark: 'github-dark-high-contrast'
+    dark: 'night-owl'
   }
 }
 

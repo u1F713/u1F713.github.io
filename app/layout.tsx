@@ -35,7 +35,7 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
   */
   <html lang="en" suppressHydrationWarning>
     <body
-      className={`${inter.className} bg-ds-bg-200 text-ds-text grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
+      className={`${inter.className} bg-dn-surface-200 text-dn-color-200 grid min-h-screen grid-cols-1 grid-rows-[1fr_auto] antialiased`}
     >
       <ThemeProvider>
         <div>
@@ -43,10 +43,10 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
           <main className="h-full">{children}</main>
         </div>
 
-        <div className="border-ds-border border-t">
-          <div className="border-ds-border mx-auto w-full max-w-screen-xl p-3 md:border-x">
+        <div className="border-dn-border border-t">
+          <div className="border-dn-border mx-auto w-full max-w-screen-xl p-3 md:border-x">
             <footer className="flex flex-wrap items-center justify-between gap-4">
-              <nav className="text-ds-text/60 flex flex-wrap gap-2">
+              <nav className="text-dn-color/60 flex flex-wrap gap-2">
                 <Link
                   className="hover:underline"
                   href="https://www.gnu.org/licenses/gpl-3.0.en.html"

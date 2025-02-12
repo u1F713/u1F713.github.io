@@ -66,8 +66,8 @@ async function Posts(props: { params: Props }) {
 
   return (
     <article>
-      <div className="border-ds-border border-b">
-        <section className="border-ds-border mx-auto max-w-screen-xl md:border-x">
+      <div className="border-dn-border border-b">
+        <section className="border-dn-border mx-auto max-w-screen-xl md:border-x">
           {data.image && (
             <Image
               className="mx-auto md:rounded-b-md"
@@ -87,7 +87,7 @@ async function Posts(props: { params: Props }) {
                 </time>
               </p>
               <h1>{data.title}</h1>
-              <p className="text-ds-text/40 text-xl font-semibold">
+              <p className="text-dn-color/40 text-xl font-semibold">
                 {data.description}
               </p>
             </div>
@@ -95,7 +95,7 @@ async function Posts(props: { params: Props }) {
         </section>
       </div>
 
-      <section className="border-ds-border mx-auto max-w-screen-xl px-4 py-8 md:border-x">
+      <section className="border-dn-border mx-auto max-w-screen-xl px-4 py-8 md:border-x">
         <div className="prose lg:prose-lg mx-auto">
           <Content components={{ img: Image }} />
         </div>

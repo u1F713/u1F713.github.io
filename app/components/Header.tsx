@@ -16,8 +16,8 @@ const NavigationLink = ({
   href: string
   active?: boolean
 }) => (
-  <div className={clsx('shadow-ds-text p-3', active && 'shadow-[0_1px]')}>
-    <Link className="text-ds-text/70 hover:text-ds-text" href={`/${href}`}>
+  <div className={clsx('shadow-dn-text p-3', active && 'shadow-[0_1px]')}>
+    <Link className="text-dn-color/70 hover:text-dn-color" href={`/${href}`}>
       {slug}
     </Link>
   </div>
@@ -27,10 +27,10 @@ function Header() {
   const pathname = usePathname()
 
   return (
-    <div className="border-ds-border bg-ds-bg-200/80 sticky top-0 border-b">
+    <div className="border-dn-border bg-dn-surface-200/80 sticky top-0 border-b">
       <header
         className={clsx(
-          'border-ds-border mx-auto flex px-4 md:border-x md:px-10',
+          'border-dn-border mx-auto flex px-4 md:border-x md:px-10',
           'max-w-screen-xl items-center justify-between backdrop-blur-md'
         )}
       >
@@ -38,7 +38,7 @@ function Header() {
           <span className="text-xl font-extrabold">末吉</span>
         </Link>
 
-        <nav className="text-ds-text/70 grid grid-flow-col content-between items-center gap-4">
+        <nav className="text-dn-color/70 grid grid-flow-col content-between items-center gap-4">
           <ul className="flex">
             <li>
               <NavigationLink
@@ -49,7 +49,7 @@ function Header() {
             </li>
           </ul>
           <a
-            className="hover:bg-ds-border/80 group relative rounded-sm p-2"
+            className="hover:bg-dn-surface-200/80 group relative rounded-sm p-2"
             href="/atom.xml"
             target="_blank"
           >
@@ -61,7 +61,7 @@ function Header() {
             />
             <span
               className={clsx(
-                'group-hover:bg-ds-border/80 pointer-events-none invisible absolute group-hover:visible',
+                'group-hover:bg-dn-surface-200/80 pointer-events-none invisible absolute group-hover:visible',
                 'rounded-sm p-1 text-xs whitespace-nowrap opacity-0 duration-120 group-hover:opacity-100',
                 '-translate-x-[calc(50%-8px)] translate-y-2 group-hover:translate-y-1/2'
               )}
