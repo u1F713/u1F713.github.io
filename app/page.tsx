@@ -2,10 +2,10 @@ import type { NextPage } from 'next'
 
 const Home: NextPage = () => (
   <div className="border-dn-border mx-auto h-full w-full max-w-screen-xl md:border-x">
-    <main className="mx-auto p-4 md:max-w-screen-md lg:max-w-full lg:p-8">
+    <main className="mx-auto px-4 py-8 md:max-w-screen-md lg:max-w-full lg:px-8">
       <div className="grid justify-around md:text-lg lg:grid-cols-[auto_auto] lg:gap-16">
         <section className="max-w-xl">
-          <h1 className="mt-2 mb-8 text-3xl font-bold lg:text-4xl">
+          <h1 className="my-4 text-3xl font-bold lg:mb-8 lg:text-4xl">
             Good for health, bad for...
           </h1>
           <p className="text-dn-color/60 my-5 italic">tl;dr: Monads...</p>
@@ -38,7 +38,9 @@ const Home: NextPage = () => (
         </section>
 
         <section>
-          <h2 className="mt-4 mb-8 text-2xl font-bold">What I&apos;m Up To</h2>
+          <h2 className="my-4 text-2xl font-bold lg:mb-8">
+            What I&apos;m Up To
+          </h2>
           <ul className="flex list-[hiragana-iroha] flex-col gap-2 pl-8">
             <li>
               Learning{' '}
