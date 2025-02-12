@@ -49,7 +49,7 @@ function Header() {
             </li>
           </ul>
           <a
-            className="hover:bg-dn-surface-200/80 group relative rounded-sm p-2"
+            className="hover:bg-dn-surface-200 group relative rounded-sm p-2"
             href="/atom.xml"
             target="_blank"
           >
@@ -61,7 +61,7 @@ function Header() {
             />
             <span
               className={clsx(
-                'group-hover:bg-dn-surface-200/80 pointer-events-none invisible absolute group-hover:visible',
+                'group-hover:bg-dn-surface-200 pointer-events-none invisible absolute group-hover:visible',
                 'rounded-sm p-1 text-xs whitespace-nowrap opacity-0 duration-120 group-hover:opacity-100',
                 '-translate-x-[calc(50%-8px)] translate-y-2 group-hover:translate-y-1/2'
               )}

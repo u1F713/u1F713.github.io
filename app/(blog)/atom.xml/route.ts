@@ -1,4 +1,4 @@
-import { generateAtomFeed } from '@/features/atom-feed'
+import { generateAtomFeed } from '@/lib/atom-feed/index.ts'
 import {
   compileContent,
   getContent,
