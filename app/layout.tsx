@@ -44,9 +44,9 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
         </div>
 
         <div className="border-dn-border border-t">
-          <div className="border-dn-border mx-auto w-full max-w-screen-xl p-3 md:border-x">
+          <div className="border-dn-border mx-auto w-full max-w-screen-xl p-4 md:border-x">
             <footer className="flex flex-wrap items-center justify-between gap-4">
-              <nav className="text-dn-color/60 flex flex-wrap gap-2">
+              <nav className="text-dn-color-200/70 flex flex-wrap gap-2">
                 <Link
                   className="hover:underline"
                   href="https://www.gnu.org/licenses/gpl-3.0.en.html"
