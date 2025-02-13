@@ -2,10 +2,8 @@
 
 import ThemeSwitch from '@/features/theme/ThemeSwitch.tsx'
 import clsx from 'clsx'
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import atomSVG from '../assets/atom-feed.svg'
 
 function Header() {
   const pathname = usePathname()
@@ -33,16 +31,21 @@ function Header() {
             </li>
             <li className="flex">
               <a
-                className="hover:bg-dn-surface-200 group relative rounded-sm"
+                className="hover:bg-dn-surface-200 group relative flex rounded-sm"
                 href="/atom.xml"
                 target="_blank"
               >
-                <Image width={16} src={atomSVG} alt="web feed" />
+                <figure
+                  className={clsx(
+                    'inline-block h-4 w-4 bg-current [mask-size:100%_100%]',
+                    '[mask:url(/atom-feed.svg)]'
+                  )}
+                />
                 <span
                   className={clsx(
                     'group-hover:bg-dn-surface-200 pointer-events-none invisible absolute group-hover:visible',
                     'rounded-sm p-1 text-xs whitespace-nowrap opacity-0 duration-120 group-hover:opacity-100',
-                    '-translate-x-[calc(50%-8px)] translate-y-2 group-hover:translate-y-1/2'
+                    '-translate-x-[calc(50%-8px)] translate-y-2 group-hover:translate-y-6'
                   )}
                   role="dialog"
                 >

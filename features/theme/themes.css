@@ -11,17 +11,6 @@
     --dn-surface-200: oklch(9.9% 0.0434 263.49);
   }
 
-  .toggle-theme {
-    mask-size: 100% 100%;
-    display: inline-block;
-    background: currentColor;
-    color: currentColor;
-    mask: url(./assets/sun.svg);
-  }
-  .dark .toggle-theme {
-    mask: url(./assets/moon.svg);
-  }
-
   .dark .shiki,
   .dark .shiki span {
     color: var(--shiki-dark) !important;
