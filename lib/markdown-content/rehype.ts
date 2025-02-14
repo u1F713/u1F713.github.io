@@ -1,11 +1,11 @@
-import rehypeShiki, { RehypeShikiOptions } from '@shikijs/rehype'
+import rehypeShiki, { type RehypeShikiOptions } from '@shikijs/rehype'
 
 const rehypeOptions: RehypeShikiOptions = {
   tabindex: false,
   addLanguageClass: true,
   inline: 'tailing-curly-colon',
   themes: {
-    light: 'github-light-high-contrast',
+    light: 'catppuccin-latte',
     dark: 'night-owl'
   }
 }
