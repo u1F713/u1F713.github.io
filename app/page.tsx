@@ -8,8 +8,7 @@ const Home: NextPage = () => (
           <h1 className="my-4 text-3xl font-bold lg:mb-8 lg:text-4xl">
             Good for health, bad for...
           </h1>
-          <p className="text-dn-color/60 my-5 italic">tl;dr: Monads...</p>
-
+          <p className="text-dn-color-200/60 my-5 italic">tl;dr: Monads...</p>
           <p className="my-5">
             My first computer was an IBM ThinkPad A31, running a Debian-based
             operating system. Since then, I&apos;ve been a dedicated Linux
