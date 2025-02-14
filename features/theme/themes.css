@@ -3,6 +3,7 @@
 @layer theme {
   :root {
     @apply scheme-light;
+    scrollbar-color: var(--dn-color-200) var(--dn-surface-200);
   }
 
   .dark {
