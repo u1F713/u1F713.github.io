@@ -1,91 +1,76 @@
 'use client'
 
 import {
-  type Dispatch,
-  type SetStateAction,
   createContext,
+  Dispatch,
+  SetStateAction,
   useContext,
   useEffect,
-  useLayoutEffect,
-  useState
+  useSyncExternalStore
 } from 'react'
 import preloadScript from './preloadScript.ts'
 import './themes.css'
 
-export interface ThemeState {
-  isDark?: boolean
+interface ThemeState {
+  isDark: boolean | null
 }
 
-type ThemeContext = {
-  theme: ThemeState
-  setTheme: Dispatch<SetStateAction<ThemeState>>
-}
-
-type Props = Readonly<{
-  children: React.ReactNode
-}>
+type ThemeContext = readonly [
+  ThemeState,
+  { setIsDark: Dispatch<SetStateAction<boolean | null>> }
+]
 
 export const ThemeContext = createContext<ThemeContext | undefined>(undefined)
 
-export function ThemeProvider({ children }: Props) {
-  const [theme, setTheme] = useState<ThemeState>({})
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const isDark = useSyncExternalStore(
+    theme.subscribe,
+    theme.snapshot,
+    theme.serverSnapshot
+  )
 
   useEffect(() => {
-    if (theme.isDark !== undefined) {
-      document.documentElement.classList.toggle('dark', theme.isDark)
-
-      const { matches } = window.matchMedia('(prefers-color-scheme: dark)')
-
-      if (matches !== theme.isDark) {
-        localStorage.setItem('theme', theme.isDark ? 'dark' : 'light')
-      } else {
-        localStorage.removeItem('theme')
-      }
-    }
-  }, [theme])
-
-  useLayoutEffect(() => {
-    const ctrl = new AbortController()
-    const prefers = window.matchMedia('(prefers-color-scheme: dark)')
-
-    const handleStorageTheme = ({ key, newValue }: StorageEvent) => {
-      if (key !== 'theme') return
-      setTheme(prev => ({ ...prev, isDark: newValue === 'dark' }))
-    }
-
-    const handleSystemTheme = ({ matches }: MediaQueryListEvent) => {
-      if (localStorage.getItem('theme') === null) {
-        setTheme(prev => ({ ...prev, isDark: matches }))
-      }
-    }
-
-    window.addEventListener('storage', handleStorageTheme, {
-      signal: ctrl.signal
-    })
-    prefers.addEventListener('change', handleSystemTheme, {
-      signal: ctrl.signal
-    })
-
-    const storageTheme = localStorage.getItem('theme')
-
-    setTheme(prev => ({
-      ...prev,
-      isDark:
-        localStorage.getItem('theme') === 'dark' ||
-        (storageTheme === null &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-    }))
-
-    return () => ctrl.abort()
-  }, [])
+    document.documentElement.classList.toggle('dark', !!isDark)
+  }, [isDark])
 
   return (
     <>
       <script suppressHydrationWarning>{`(${preloadScript})()`}</script>
-      <ThemeContext value={{ theme, setTheme }}>{children}</ThemeContext>
+      <ThemeContext value={[{ isDark }, { setIsDark: theme.setIsDark }]}>
+        {children}
+      </ThemeContext>
     </>
   )
 }
+
+const theme = (() => {
+  const MEDIA = '(prefers-color-scheme: dark)'
+  const subscribe = (onChange: () => void) => {
+    const ctrl = new AbortController()
+    window
+      .matchMedia(MEDIA)
+      .addEventListener('change', onChange, { signal: ctrl.signal })
+    window.addEventListener('storage', onChange, { signal: ctrl.signal })
+    return ctrl.abort
+  }
+  const snapshot = () => {
+    const local = localStorage.getItem('theme')
+    return (
+      local === 'dark' || (local === null && window.matchMedia(MEDIA).matches)
+    )
+  }
+  const serverSnapshot = () => null
+  const setIsDark: Dispatch<SetStateAction<boolean | null>> = value => {
+    const update = value instanceof Function ? value(snapshot()) : value
+    const { matches } = window.matchMedia(MEDIA)
+
+    if (update === matches) localStorage.removeItem('theme')
+    else localStorage.setItem('theme', update ? 'dark' : 'light')
+
+    window.dispatchEvent(new StorageEvent('storage'))
+  }
+  return { subscribe, snapshot, serverSnapshot, setIsDark }
+})()
 
 export function useTheme() {
   const theme = useContext(ThemeContext)

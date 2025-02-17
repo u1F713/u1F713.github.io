@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { useTheme } from './ThemeContext.tsx'
 
 export default function ThemeSwitch() {
-  const { setTheme } = useTheme()
+  const [, { setIsDark }] = useTheme()
 
   return (
     <figure
@@ -13,7 +13,7 @@ export default function ThemeSwitch() {
         `[mask:url(/sun.svg)] dark:[mask:url(/moon.svg)]`
       )}
       onClick={() => {
-        setTheme(prev => ({ ...prev, isDark: !prev.isDark }))
+        setIsDark(prev => !prev)
       }}
     />
   )
