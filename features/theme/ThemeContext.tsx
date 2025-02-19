@@ -2,13 +2,13 @@
 
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
+  type Dispatch,
+  type SetStateAction,
   useContext,
   useEffect,
   useSyncExternalStore
 } from 'react'
-import preloadScript from './preloadScript.ts'
+import { preloadTheme } from './script.ts'
 import './themes.css'
 
 interface ThemeState {
@@ -35,7 +35,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <script suppressHydrationWarning>{`(${preloadScript})()`}</script>
+      <script suppressHydrationWarning>{`(${preloadTheme})()`}</script>
       <ThemeContext value={[{ isDark }, { setIsDark: theme.setIsDark }]}>
         {children}
       </ThemeContext>

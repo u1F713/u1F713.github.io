@@ -1,4 +1,4 @@
-export default function preloadTheme() {
+export const preloadTheme = () => {
   const theme = localStorage.getItem('theme')
 
   document.documentElement.classList.toggle(
