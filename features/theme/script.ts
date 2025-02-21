@@ -1,10 +1,9 @@
-export const preloadTheme = () => {
-  const theme = localStorage.getItem('theme')
-
+export const preloadTheme = (): undefined => {
+  const colorScheme = localStorage.getItem('theme-color-scheme')
   document.documentElement.classList.toggle(
     'dark',
-    theme === 'dark' ||
-      (theme === null &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    colorScheme === 'auto'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : colorScheme === 'dark'
   )
 }
