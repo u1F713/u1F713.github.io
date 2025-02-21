@@ -36,7 +36,7 @@ const Home: NextPage = () => (
           </p>
         </section>
 
-        <section>
+        <section className="max-w-md">
           <h2 className="my-4 text-2xl font-bold lg:mb-8">
             What I&apos;m Up To
           </h2>
@@ -52,9 +52,9 @@ const Home: NextPage = () => (
                 Effect-TS.
               </a>
             </li>
-            <li>Reading The Origins of Totalitarianism.</li>
+            <li>Reading Between Past and Future</li>
             <li>
-              Playing Type Lumina;{' '}
+              Playing Type Lumina:{' '}
               <a
                 className="font-bold underline decoration-dotted underline-offset-4"
                 href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_neco-arc_command_lists_en.pdf"
