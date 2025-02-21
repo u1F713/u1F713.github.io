@@ -67,7 +67,7 @@ async function Posts(props: { params: Props }) {
   return (
     <article className="flex h-full flex-col">
       <div className="border-dn-border border-b">
-        <section className="border-dn-border mx-auto max-w-screen-xl md:border-x">
+        <section className="border-dn-border mx-auto max-w-screen-xl lg:border-x">
           {data.image && (
             <Image
               className="mx-auto md:rounded-b-md"
@@ -95,7 +95,7 @@ async function Posts(props: { params: Props }) {
         </section>
       </div>
 
-      <section className="border-dn-border mx-auto h-full w-full max-w-screen-xl px-4 py-8 md:border-x">
+      <section className="border-dn-border mx-auto h-full w-full max-w-screen-xl px-4 py-8 lg:border-x">
         <div className="prose lg:prose-lg mx-auto">
           <Content components={{ img: Image }} />
         </div>

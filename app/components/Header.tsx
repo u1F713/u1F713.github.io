@@ -12,7 +12,7 @@ function Header() {
     <div className="border-dn-border bg-dn-surface-200/80 sticky top-0 border-b backdrop-blur-md">
       <header
         className={clsx(
-          'border-dn-border mx-auto flex px-4 md:border-x md:px-6',
+          'border-dn-border mx-auto flex px-4 md:px-6 lg:border-x',
           'max-w-screen-xl items-center justify-between'
         )}
       >
