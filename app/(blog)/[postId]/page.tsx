@@ -54,7 +54,7 @@ async function Posts(props: { params: Props }) {
     Stream.flatMap(content =>
       Effect.zipWith(
         parseFrontmatter(PostScheme)(content),
-        compileContent(content, [Rehype.plugin]),
+        compileContent(content, [...Rehype.plugins]),
         (data, Content) => ({ data, Content }),
         { concurrent: true }
       )
