@@ -1,6 +1,6 @@
 'use client'
 
-import ThemeSwitch from '@/features/theme/ThemeSwitch.tsx'
+import ThemeSwitch from '@/app/theme/ThemeSwitch'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

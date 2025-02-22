@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@/features/theme/ThemeContext.tsx'
+import { ThemeProvider } from '@/app/theme/ThemeContext.tsx'
 import type { Metadata, NextPage } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'

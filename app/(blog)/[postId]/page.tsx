@@ -6,7 +6,7 @@ import {
   parseFrontmatter,
   readContentDirectory,
   Rehype
-} from '@/lib/markdown-content'
+} from '@/app/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
 import { Metadata } from 'next'

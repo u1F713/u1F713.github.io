@@ -3,7 +3,7 @@ import {
   getContentID,
   parseFrontmatter,
   readContentDirectory
-} from '@/lib/markdown-content'
+} from '@/app/lib/markdown-content/index.ts'
 import { NodeContext } from '@effect/platform-node'
 import clsx from 'clsx'
 import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'

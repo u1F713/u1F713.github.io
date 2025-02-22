@@ -3,7 +3,7 @@ import {
   cloudinaryLayer,
   fetchImage,
   readMetadata
-} from '@/lib/external-image'
+} from '@/app/lib/external-image'
 import { Effect } from 'effect'
 import NextImage from 'next/image'
 

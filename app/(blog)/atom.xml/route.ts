@@ -1,11 +1,11 @@
-import { generateAtomFeed } from '@/lib/atom-feed/index.ts'
+import { generateAtomFeed } from '@/app/lib/atom-feed/index.ts'
 import {
   compileContent,
   getContent,
   getContentID,
   parseFrontmatter,
   readContentDirectory
-} from '@/lib/markdown-content'
+} from '@/app/lib/markdown-content/index.ts'
 import { NodeContext } from '@effect/platform-node'
 import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
 import { PostScheme } from '../postScheme.ts'

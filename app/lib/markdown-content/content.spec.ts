@@ -10,7 +10,7 @@ describe('compiler test-suite', () => {
     bar: Schema.String
   })
 
-  const filePath = 'lib/markdown-content/mocks/content.md'
+  const filePath = 'app/lib/markdown-content/mocks/content.md'
 
   it.effect('should be parse', () =>
     pipe(
