@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import { useTheme } from './ThemeContext.tsx'
+import { useTheme } from './ThemeProvider.tsx'
 
 export default function ThemeSwitch() {
   const { setColorScheme } = useTheme()

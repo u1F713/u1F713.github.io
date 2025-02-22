@@ -1,8 +1,8 @@
-import { ThemeProvider } from '@/app/theme/ThemeContext.tsx'
 import type { Metadata, NextPage } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import Header from './components/Header.tsx'
+import { ThemeProvider } from './components/Theme/ThemeProvider.tsx'
 import './globals.css'
 
 const inter = Inter({

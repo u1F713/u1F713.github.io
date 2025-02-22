@@ -34,5 +34,3 @@ export const snapshot = (): ColorScheme => {
     ? colorScheme
     : getSystemColorScheme()
 }
-
-export const serverSnapshot = (): ColorScheme => 'light'

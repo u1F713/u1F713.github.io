@@ -10,22 +10,19 @@ import {
 } from 'react'
 import * as ColorScheme from './ColorScheme.ts'
 import { preloadTheme } from './script.ts'
-import './themes.css'
 
 type ColorSchemeContext = {
   colorScheme: ColorScheme.ColorScheme
   setColorScheme: Dispatch<SetStateAction<ColorScheme.ColorScheme>>
 }
 
-export const ColorSchemeContext = createContext<ColorSchemeContext | null>(
-  null
-)
+const ColorSchemeContext = createContext<ColorSchemeContext | null>(null)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const colorScheme = useSyncExternalStore(
     ColorScheme.subscribe,
     ColorScheme.snapshot,
-    ColorScheme.serverSnapshot
+    () => 'light' as const
   )
 
   const setColorScheme = (_: SetStateAction<ColorScheme.ColorScheme>) => {

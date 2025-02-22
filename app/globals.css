@@ -14,6 +14,25 @@
   );
 }
 
+@layer theme {
+  :root {
+    @apply scheme-light;
+    scrollbar-color: var(--dn-color-200) var(--dn-surface-200);
+  }
+
+  .dark {
+    @apply scheme-dark;
+    --dn-color-200: oklch(96.75% 0.0168 270);
+    --dn-surface-200: oklch(9.9% 0.0434 263.49);
+  }
+
+  .dark .shiki,
+  .dark .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
 @layer utilities {
   .prose {
     --tw-prose-body: var(--dn-color-color);
