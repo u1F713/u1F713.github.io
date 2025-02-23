@@ -1,3 +1,4 @@
+import CodeBlock from '@/app/components/CodeBlock'
 import Image from '@/app/components/Image'
 import {
   compileContent,
@@ -97,7 +98,7 @@ async function Posts(props: { params: Props }) {
 
       <section className="border-dn-border mx-auto h-full w-full max-w-screen-xl px-4 py-8 lg:border-x">
         <div className="prose lg:prose-lg mx-auto">
-          <Content components={{ img: Image }} />
+          <Content components={{ img: Image, pre: CodeBlock }} />
         </div>
       </section>
     </article>
