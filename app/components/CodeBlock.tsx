@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
+import styles from './CodeBlock.module.css'
 
 type CodeBlockProps = React.ComponentProps<'pre'> & {
   'data-language': string
@@ -72,7 +73,9 @@ export default function CodeBlock({
           )}
         </button>
       </div>
-      <div ref={codeContainerRef}>{children}</div>
+      <div className={styles['code-container']} ref={codeContainerRef}>
+        {children}
+      </div>
     </pre>
   )
 }
