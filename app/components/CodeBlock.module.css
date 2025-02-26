@@ -8,7 +8,7 @@
       display: inline-block;
       width: 1em;
       margin-right: 1.5em;
-      color: currentcolor;
+      color: color-mix(in oklab, var(--color-dn-color-200) 40%, transparent);
       content: counter(line);
       counter-increment: line;
     }
