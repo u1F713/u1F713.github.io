@@ -11,15 +11,16 @@ type CodeBlockProps = React.ComponentProps<'pre'> & {
 }
 
 export default function CodeBlock({
-  // 'data-language': metaLanguage,
+  'data-language': language,
   style,
   className,
   children,
   ...props
 }: CodeBlockProps) {
-  const codeContainerRef = useRef<HTMLDivElement>(null)
+  const codeContainerRef = useRef<HTMLPreElement>(null)
   const [copied, setCopied] = useState(false)
   const [debounced, setDebounced] = useState<NodeJS.Timeout>()
+  const langTag = language === 'sh' ? 'shell session' : language
 
   const copyToTheClipboard = () => {
     if (codeContainerRef.current?.textContent) {
@@ -31,11 +32,20 @@ export default function CodeBlock({
   }
 
   return (
-    <pre className={clsx(className, 'group')} style={style} {...props}>
+    <div
+      className={clsx(
+        'group prose-pre:my-0 prose-pre:rounded-none my-8 overflow-hidden rounded-md',
+        className
+      )}
+      style={style}
+    >
       <div className="relative flex justify-between">
+        <div className="bg-dn-surface-200 text-dn-color-200 rounded-br-md px-4 py-3 text-sm">
+          {langTag}
+        </div>
         <button
           className={clsx(
-            'text-dn-color-200/70 invisible absolute top-0 right-0 lg:-right-2',
+            'text-dn-color-200/90 invisible absolute top-0 right-0 m-2',
             'rounded border border-current p-2 opacity-0 duration-200',
             'group-hover:visible group-hover:opacity-100'
           )}
@@ -44,8 +54,8 @@ export default function CodeBlock({
           {copied ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -58,8 +68,8 @@ export default function CodeBlock({
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -73,9 +83,14 @@ export default function CodeBlock({
           )}
         </button>
       </div>
-      <div className={styles['code-container']} ref={codeContainerRef}>
+      <pre
+        className={clsx(styles['code-container'], className)}
+        ref={codeContainerRef}
+        style={style}
+        {...props}
+      >
         {children}
-      </div>
-    </pre>
+      </pre>
+    </div>
   )
 }
