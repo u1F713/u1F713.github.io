@@ -78,9 +78,6 @@ importers:
       fast-xml-parser:
         specifier: ^4.5.1
         version: 4.5.1
-      happy-dom:
-        specifier: ^16.8.1
-        version: 16.8.1
       lefthook:
         specifier: ^1.10.10
         version: 1.10.10
@@ -4730,6 +4727,7 @@ snapshots:
     dependencies:
       webidl-conversions: 7.0.0
       whatwg-mimetype: 3.0.0
+    optional: true
 
   has-bigints@1.1.0: {}
 
@@ -6353,9 +6351,11 @@ snapshots:
       - supports-color
       - terser
 
-  webidl-conversions@7.0.0: {}
+  webidl-conversions@7.0.0:
+    optional: true
 
-  whatwg-mimetype@3.0.0: {}
+  whatwg-mimetype@3.0.0:
+    optional: true
 
   which-boxed-primitive@1.1.1:
     dependencies:
