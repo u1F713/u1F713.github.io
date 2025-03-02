@@ -35,7 +35,7 @@ export default async function Posts() {
   )
 
   return (
-    <div className="border-dn-border mx-auto h-full w-full max-w-screen-xl lg:border-x">
+    <div className="mx-auto w-full max-w-screen-xl">
       <h1 className="px-4 py-10 text-3xl font-semibold lg:px-6 lg:text-5xl">
         Blog posts
       </h1>

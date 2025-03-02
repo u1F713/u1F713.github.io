@@ -43,27 +43,23 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
           <main className="h-full">{children}</main>
         </div>
 
-        <div className="border-dn-border border-t">
-          <div className="border-dn-border mx-auto w-full max-w-screen-xl p-4 lg:border-x">
-            <footer className="flex flex-wrap items-center justify-between gap-4">
-              <nav className="text-dn-color-200/70 flex flex-wrap gap-2">
-                <Link
-                  className="hover:underline"
-                  href="https://www.gnu.org/licenses/gpl-3.0.en.html"
-                  target="_blank"
-                >
-                  &copy; {new Date().getFullYear()} GNU General Public License
-                </Link>
-                <Link
-                  className="hover:underline"
-                  href="https://github.com/u1F713/u1F713.github.io"
-                >
-                  Source Code
-                </Link>
-              </nav>
-            </footer>
-          </div>
-        </div>
+        <footer className="mx-auto w-full max-w-screen-xl p-4">
+          <nav className="text-dn-color-200/70 flex flex-wrap gap-2">
+            <Link
+              className="hover:underline"
+              href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+              target="_blank"
+            >
+              &copy; {new Date().getFullYear()} GNU General Public License
+            </Link>
+            <Link
+              className="hover:underline"
+              href="https://github.com/u1F713/u1F713.github.io"
+            >
+              Source Code
+            </Link>
+          </nav>
+        </footer>
       </ThemeProvider>
     </body>
   </html>

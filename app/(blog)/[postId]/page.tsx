@@ -66,37 +66,35 @@ async function Posts(props: { params: Props }) {
   )
 
   return (
-    <article className="flex h-full flex-col">
-      <div className="border-dn-border border-b">
-        <section className="border-dn-border mx-auto max-w-screen-xl lg:border-x">
-          {data.image && (
-            <Image
-              className="mx-auto md:rounded-b-md"
-              priority={true}
-              loading="eager"
-              src={data.image}
-              alt={data.title}
-              height={400}
-            />
-          )}
+    <article>
+      {data.image && (
+        <Image
+          className="mx-auto md:rounded-md"
+          priority={true}
+          loading="eager"
+          src={data.image}
+          alt={data.title}
+          height={400}
+        />
+      )}
 
-          <div className="px-4 py-8">
-            <div className="prose lg:prose-lg mx-auto">
-              <p>
-                <time dateTime={data.pubDate.toDateString()}>
-                  {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
-                </time>
-              </p>
-              <h1>{data.title}</h1>
-              <p className="text-dn-color/40 text-xl font-semibold">
-                {data.description}
-              </p>
-            </div>
+      <section>
+        <div className="px-4">
+          <div className="prose lg:prose-lg mx-auto">
+            <p>
+              <time dateTime={data.pubDate.toDateString()}>
+                {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
+              </time>
+            </p>
+            <h1>{data.title}</h1>
+            <p className="text-dn-color/40 text-xl font-semibold">
+              {data.description}
+            </p>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <section className="border-dn-border mx-auto h-full w-full max-w-screen-xl px-4 py-8 lg:border-x">
+      <section className="mx-auto w-full max-w-screen-xl px-4 py-8">
         <div className="prose lg:prose-lg mx-auto">
           <Content components={{ img: Image, pre: CodeBlock }} />
         </div>

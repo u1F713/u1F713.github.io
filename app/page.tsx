@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => (
-  <div className="border-dn-border mx-auto h-full w-full max-w-screen-xl lg:border-x">
+  <div className="mx-auto w-full max-w-screen-xl">
     <main className="mx-auto px-4 py-8 md:max-w-screen-md lg:max-w-full lg:px-8">
       <div className="grid justify-around md:text-lg lg:grid-cols-[auto_auto] lg:gap-16">
         <section className="max-w-xl">
