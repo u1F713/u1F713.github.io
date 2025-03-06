@@ -1,69 +1,26 @@
 import CodeBlock from '@/app/components/CodeBlock'
 import Image from '@/app/components/Image'
-import {
-  compileContent,
-  getContent,
-  getContentID,
-  parseFrontmatter,
-  readContentDirectory,
-  Rehype
-} from '@/app/lib/markdown-content'
 import { NodeContext } from '@effect/platform-node'
-import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
-import { Metadata } from 'next'
-import { PostScheme } from '../postScheme'
+import { Chunk, Effect, ManagedRuntime, Stream } from 'effect'
+import { Metadata, NextPage } from 'next'
+import * as Post from '../Post'
 
-type Props = Promise<{
-  postId: string
-}>
+interface Props {
+  params: Promise<{ postId: string }>
+}
 
 const runtime = ManagedRuntime.make(NodeContext.layer)
 
-export function generateStaticParams() {
-  const posts = readContentDirectory('app/(blog)/content').pipe(
-    Stream.mapEffect(getContentID),
-    Stream.map(postId => ({ postId })),
-    Stream.runCollect,
-    Effect.map(Chunk.toArray)
-  )
-  return runtime.runPromise(posts)
-}
-
-export async function generateMetadata(props: {
-  params: Props
-}): Promise<Metadata> {
-  const { postId } = await props.params
-  const { title, description } = await pipe(
-    readContentDirectory('app/(blog)/content'),
-    Stream.filterEffect(_ => Effect.map(getContentID(_), id => id === postId)),
-    Stream.mapEffect(getContent),
-    Stream.flatMap(parseFrontmatter(PostScheme)),
-    Stream.runCollect,
-    Effect.flatMap(Chunk.head),
-    runtime.runPromise
-  )
-  return { title: `${title} | u1F713`, description: description }
-}
-
-async function Posts(props: { params: Props }) {
-  const { postId } = await props.params
-
-  const { data, Content } = await pipe(
-    readContentDirectory('app/(blog)/content'),
-    Stream.filterEffect(_ => Effect.map(getContentID(_), id => id === postId)),
-    Stream.mapEffect(getContent),
-    Stream.flatMap(content =>
-      Effect.zipWith(
-        parseFrontmatter(PostScheme)(content),
-        compileContent(content, [...Rehype.plugins]),
-        (data, Content) => ({ data, Content }),
-        { concurrent: true }
-      )
-    ),
-    Stream.runCollect,
-    Effect.flatMap(Chunk.head),
-    runtime.runPromise
-  )
+const PostPage: NextPage<Props> = async props => {
+  const [data, PostContent] = await Effect.gen(function* () {
+    const { postId } = yield* Effect.promise(() => props.params)
+    return yield* Post.collection.pipe(
+      Stream.filter(({ id }) => id === postId),
+      Stream.flatMap(post => Stream.zip(post.data, post.component)),
+      Stream.runCollect,
+      Effect.flatMap(Chunk.head)
+    )
+  }).pipe(runtime.runPromise)
 
   return (
     <article>
@@ -96,12 +53,35 @@ async function Posts(props: { params: Props }) {
 
       <section className="mx-auto w-full max-w-screen-xl px-4 py-8">
         <div className="prose lg:prose-lg mx-auto">
-          <Content components={{ img: Image, pre: CodeBlock }} />
+          <PostContent components={{ img: Image, pre: CodeBlock }} />
         </div>
       </section>
     </article>
   )
 }
 
+export const generateStaticParams = () =>
+  Post.collection.pipe(
+    Stream.map(({ id }) => ({ postId: id })),
+    Stream.runCollect,
+    Effect.map(Chunk.toArray),
+    runtime.runPromise
+  )
+
+export const generateMetadata = (props: Props): Promise<Metadata> =>
+  Effect.gen(function* () {
+    const { postId } = yield* Effect.promise(() => props.params)
+    const { title, description } = yield* Post.collection.pipe(
+      Stream.filter(({ id }) => id === postId),
+      Stream.flatMap(({ data }) => data),
+      Stream.runCollect,
+      Effect.flatMap(Chunk.head)
+    )
+    return {
+      title: `${title} | u1F713`,
+      description: description
+    }
+  }).pipe(runtime.runPromise)
+
 export const dynamicParams = false
-export default Posts
+export default PostPage

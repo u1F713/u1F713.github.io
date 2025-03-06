@@ -1,37 +1,23 @@
-import {
-  getContent,
-  getContentID,
-  parseFrontmatter,
-  readContentDirectory
-} from '@/app/lib/markdown-content/index.ts'
 import { NodeContext } from '@effect/platform-node'
 import clsx from 'clsx'
-import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
+import { Chunk, Effect, Stream } from 'effect'
+import type { NextPage } from 'next'
 import Link from 'next/link'
-import { PostScheme } from '../postScheme.ts'
+import * as Post from '../Post.ts'
 
-export default async function Posts() {
-  const runtime = ManagedRuntime.make(NodeContext.layer)
+const postTask = Post.collection.pipe(
+  Stream.flatMap(post =>
+    Stream.map(post.data, data => ({ id: post.id, data }))
+  ),
+  Stream.runCollect
+)
 
-  const postsOrder = Order.mapInput(
-    Order.reverse(Order.Date),
-    (post: { data: PostScheme }) => post.data.pubDate
-  )
-  const getPost = pipe(
-    readContentDirectory('app/(blog)/content'),
-    Stream.flatMap(filename =>
-      Stream.zipWith(
-        getContentID(filename),
-        Effect.flatMap(getContent(filename), parseFrontmatter(PostScheme)),
-        (id, data) => ({ id, data })
-      )
+const Posts: NextPage = async () => {
+  const posts = await Effect.runPromise(
+    postTask.pipe(
+      Effect.map(Chunk.sort(Post.order)),
+      Effect.provide(NodeContext.layer)
     )
-  )
-
-  const posts = await getPost.pipe(
-    Stream.runCollect,
-    Effect.map(Chunk.sort(postsOrder)),
-    runtime.runPromise
   )
 
   return (
@@ -53,7 +39,7 @@ export default async function Posts() {
   )
 }
 
-const ArticleCard = ({ title, description, pubDate, tags }: PostScheme) => (
+const ArticleCard = ({ title, description, pubDate, tags }: Post.Schema) => (
   <article
     className={clsx(
       'grid h-full min-h-70 grid-cols-1 grid-rows-[auto_1fr] gap-5 break-words lg:min-h-90',
@@ -86,3 +72,5 @@ const ArticleCard = ({ title, description, pubDate, tags }: PostScheme) => (
     </section>
   </article>
 )
+
+export default Posts

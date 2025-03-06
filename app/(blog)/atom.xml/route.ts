@@ -1,39 +1,23 @@
 import { generateAtomFeed } from '@/app/lib/atom-feed/index.ts'
-import {
-  compileContent,
-  getContent,
-  getContentID,
-  parseFrontmatter,
-  readContentDirectory
-} from '@/app/lib/markdown-content/index.ts'
 import { NodeContext } from '@effect/platform-node'
-import { Chunk, Effect, ManagedRuntime, Order, pipe, Stream } from 'effect'
-import { PostScheme } from '../postScheme.ts'
+import { Array, Chunk, Effect, ManagedRuntime, Stream } from 'effect'
+import * as Post from '../Post.ts'
 
 export async function GET() {
   const { renderToStaticMarkup } = await import('react-dom/server')
   const runtime = ManagedRuntime.make(NodeContext.layer)
-  const postsOrder = Order.mapInput(
-    Order.reverse(Order.Date),
-    (post: { data: PostScheme }) => post.data.pubDate
-  )
-  const posts = await pipe(
-    readContentDirectory('app/(blog)/content'),
-    Stream.mapEffect(
-      Effect.fn(function* (filename) {
-        const file = yield* getContent(filename)
-        const Content = yield* compileContent(file)
 
-        return {
-          id: yield* getContentID(filename),
-          data: yield* parseFrontmatter(PostScheme)(file),
-          Content: renderToStaticMarkup(Content({}))
-        }
-      })
+  const posts = await Post.collection.pipe(
+    Stream.flatMap(post =>
+      Stream.zipWith(post.data, post.component, (data, PostComponent) => ({
+        id: post.id,
+        data,
+        PostComponent
+      }))
     ),
+
     Stream.runCollect,
-    Effect.map(Chunk.sort(postsOrder)),
-    Effect.map(Chunk.toReadonlyArray),
+    Effect.map(Chunk.sort(Post.order)),
     runtime.runPromise
   )
 
@@ -46,12 +30,12 @@ export async function GET() {
         self: 'https://u1f713.github.io/atom.xml'
       },
       author: { name: 'Nyarlathotep', email: 'anhedonia@skiff.com' },
-      entries: posts.map(({ id, data, Content }) => ({
-        id,
-        title: data.title,
-        link: `https://u1f713.github.io/${id}`,
-        updated: data.updatedDate ?? data.pubDate,
-        content: Content
+      entries: Array.map(Chunk.toArray(posts), post => ({
+        id: post.id,
+        title: post.data.title,
+        link: `https://u1f713.github.io/${post.id}`,
+        updated: post.data.updatedDate ?? post.data.pubDate,
+        content: renderToStaticMarkup(post.PostComponent({}))
       }))
     })
   )
