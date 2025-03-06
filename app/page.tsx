@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => (
-  <div className="mx-auto w-full max-w-screen-xl">
-    <main className="mx-auto px-4 py-8 md:max-w-screen-md lg:max-w-full lg:px-8">
-      <div className="grid justify-around md:text-lg lg:grid-cols-[auto_auto] lg:gap-16">
+  <div className="max-w-screen-lg">
+    <main className="md:max-w-screen-md lg:max-w-full">
+      <div className="grid md:text-lg lg:grid-cols-[auto_auto] lg:gap-16">
         <section className="max-w-xl">
           <h1 className="my-4 text-3xl font-bold lg:mb-8 lg:text-4xl">
             Good for health, bad for...

@@ -10,12 +10,7 @@ function Header() {
 
   return (
     <div className="bg-dn-surface-200/80 sticky top-0 z-50 backdrop-blur-md">
-      <header
-        className={clsx(
-          'mx-auto flex px-4 md:px-6',
-          'max-w-screen-xl items-center justify-between'
-        )}
-      >
+      <header className="mx-auto flex max-w-screen-lg items-center justify-between px-4">
         <Link className="text-lg" href="/">
           <span className="text-xl font-extrabold">末吉</span>
         </Link>

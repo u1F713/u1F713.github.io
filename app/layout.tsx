@@ -40,11 +40,11 @@ const RootLayout: NextPage<RootProps> = ({ children }) => (
       <ThemeProvider>
         <div>
           <Header />
-          <main className="h-full">{children}</main>
+          <main className="mx-auto max-w-screen-lg p-4 pt-8">{children}</main>
         </div>
 
-        <footer className="mx-auto w-full max-w-screen-xl p-4">
-          <nav className="text-dn-color-200/70 flex flex-wrap gap-2">
+        <footer className="mx-auto w-full max-w-screen-lg p-4">
+          <nav className="text-dn-color-200/70 flex flex-wrap gap-x-4">
             <Link
               className="hover:underline"
               href="https://www.gnu.org/licenses/gpl-3.0.en.html"
