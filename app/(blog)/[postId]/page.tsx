@@ -26,35 +26,29 @@ const PostPage: NextPage<Props> = async props => {
     <article>
       {data.image && (
         <Image
-          className="mx-auto md:rounded-md"
-          priority={true}
+          className="mx-auto rounded-lg"
           loading="eager"
+          priority={true}
+          height={400}
           src={data.image}
           alt={data.title}
-          height={400}
         />
       )}
 
-      <section>
-        <div className="px-4">
-          <div className="prose lg:prose-lg mx-auto">
-            <p>
-              <time dateTime={data.pubDate.toDateString()}>
-                {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
-              </time>
-            </p>
-            <h1>{data.title}</h1>
-            <p className="text-dn-color/40 text-xl font-semibold">
-              {data.description}
-            </p>
-          </div>
-        </div>
+      <section className="prose lg:prose-lg mx-auto my-8">
+        <h1 className="mb-1">{data.title}</h1>
+        <p className="text-dn-color-200/70 mt-0">
+          <time dateTime={data.pubDate.toDateString()}>
+            {data.pubDate.toLocaleString('en-US', { dateStyle: 'long' })}
+          </time>
+        </p>
+        <p className="text-dn-color/40 text-xl font-semibold">
+          {data.description}
+        </p>
       </section>
 
-      <section className="mx-auto w-full max-w-screen-xl px-4 py-8">
-        <div className="prose lg:prose-lg mx-auto">
-          <PostContent components={{ img: Image, pre: CodeBlock }} />
-        </div>
+      <section className="prose lg:prose-lg mx-auto">
+        <PostContent components={{ img: Image, pre: CodeBlock }} />
       </section>
     </article>
   )
