@@ -31,7 +31,7 @@ function Header() {
         </Link>
 
         <nav className="text-dn-color/70">
-          <ul className="grid grid-flow-col content-between items-center gap-5 font-medium">
+          <ul className="grid grid-flow-col content-between items-center gap-1 font-medium">
             <Link
               className="hover:bg-dn-surface-100 rounded-md p-2"
               href="/posts"
