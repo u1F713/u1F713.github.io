@@ -1,7 +1,7 @@
 import CodeBlock from '@/app/components/CodeBlock'
 import Image from '@/app/components/Image'
 import { NodeContext } from '@effect/platform-node'
-import { Chunk, Effect, ManagedRuntime, Stream } from 'effect'
+import { Chunk, Effect, ManagedRuntime, pipe, Stream } from 'effect'
 import { Metadata, NextPage } from 'next'
 import * as Post from '../Post'
 
@@ -12,15 +12,14 @@ interface Props {
 const runtime = ManagedRuntime.make(NodeContext.layer)
 
 const PostPage: NextPage<Props> = async props => {
-  const [data, PostContent] = await Effect.gen(function* () {
-    const { postId } = yield* Effect.promise(() => props.params)
-    return yield* Post.collection.pipe(
-      Stream.filter(({ id }) => id === postId),
-      Stream.flatMap(post => Stream.zip(post.data, post.component)),
-      Stream.runCollect,
-      Effect.flatMap(Chunk.head)
-    )
-  }).pipe(runtime.runPromise)
+  const { postId } = await props.params
+  const [data, PostContent] = await Post.collection.pipe(
+    Stream.filter(({ id }) => id === postId),
+    Stream.flatMap(post => Stream.zip(post.data, post.component)),
+    Stream.runHead,
+    Effect.flatten,
+    runtime.runPromise
+  )
 
   return (
     <article>
@@ -63,19 +62,20 @@ export const generateStaticParams = () =>
   )
 
 export const generateMetadata = (props: Props): Promise<Metadata> =>
-  Effect.gen(function* () {
-    const { postId } = yield* Effect.promise(() => props.params)
-    const { title, description } = yield* Post.collection.pipe(
-      Stream.filter(({ id }) => id === postId),
-      Stream.flatMap(({ data }) => data),
-      Stream.runCollect,
-      Effect.flatMap(Chunk.head)
-    )
-    return {
+  pipe(
+    Effect.promise(() => props.params),
+    Stream.flatMap(({ postId }) =>
+      Stream.filter(Post.collection, ({ id }) => id === postId)
+    ),
+    Stream.flatMap(({ data }) => data),
+    Stream.map(({ title, description }) => ({
       title: `${title} | u1F713`,
       description: description
-    }
-  }).pipe(runtime.runPromise)
+    })),
+    Stream.runHead,
+    Effect.flatten,
+    runtime.runPromise
+  )
 
 export const dynamicParams = false
 export default PostPage
