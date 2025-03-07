@@ -6,11 +6,12 @@
 
 @theme {
   --color-dn-color-200: var(--dn-color-200, oklch(29.71% 0.1616 263.65));
+  --color-dn-surface-100: var(--dn-surface-100, oklch(94.01% 0 0));
   --color-dn-surface-200: var(--dn-surface-200, oklch(99.4% 0 24.04));
   --color-dn-border: color-mix(
     in oklab,
-    var(--color-dn-color-200) 40%,
-    var(--color-dn-surface-200)
+    var(--color-dn-color-200) 20%,
+    transparent
   );
 }
 
@@ -23,7 +24,8 @@
   .dark {
     @apply scheme-dark;
     --dn-color-200: oklch(96.75% 0.0168 270);
-    --dn-surface-200: oklch(9.9% 0.0434 263.49);
+    --dn-surface-100: oklch(22.97% 0.0015 197.05);
+    --dn-surface-200: oklch(13% 0.002 246.26);
   }
 
   .dark .shiki,
