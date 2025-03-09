@@ -4,9 +4,11 @@ import ThemeSwitch from '@/app/components/Theme/ThemeSwitch'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import { useTheme } from './Theme/ThemeProvider.tsx'
 
 function Header() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const { setColorScheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +64,12 @@ function Header() {
               </span>
             </a>
 
-            <span className="hover:bg-dn-surface-100 flex rounded-md p-2.5">
+            <span
+              className={'hover:bg-dn-surface-100 flex rounded-md p-2.5'}
+              onClick={() =>
+                setColorScheme(prev => (prev === 'dark' ? 'light' : 'dark'))
+              }
+            >
               <ThemeSwitch />
             </span>
           </ul>
