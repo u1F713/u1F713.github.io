@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import type { NextPage } from 'next'
+import Mark from './components/Mark.tsx'
 
 const Home: NextPage = () => (
   <div
@@ -43,33 +44,30 @@ const Home: NextPage = () => (
         <li>
           Learning{' '}
           <a
-            className="font-bold underline decoration-dotted underline-offset-4"
             href="https://effect.website/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Effect-TS.
+            <Mark>Effect-TS.</Mark>
           </a>
         </li>
         <li>Reading Between Past and Future</li>
         <li>
           Playing Type Lumina:{' '}
           <a
-            className="font-bold underline decoration-dotted underline-offset-4"
             href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_neco-arc_command_lists_en.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Neco-Arc
+            <Mark>Neco-Arc</Mark>
           </a>{' '}
           and{' '}
           <a
-            className="font-bold underline decoration-dotted underline-offset-4"
             href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_kohaku_command_lists_en.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Kohaku.
+            <Mark>Kohaku.</Mark>
           </a>
         </li>
       </ul>
