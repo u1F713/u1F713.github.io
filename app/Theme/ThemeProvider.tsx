@@ -8,8 +8,8 @@ import {
   useEffect,
   useSyncExternalStore
 } from 'react'
-import * as ColorScheme from './ColorScheme.ts'
 import { preloadTheme } from './script.ts'
+import * as ColorScheme from './themeStorage.ts'
 
 type ColorSchemeContext = {
   colorScheme: ColorScheme.ColorScheme

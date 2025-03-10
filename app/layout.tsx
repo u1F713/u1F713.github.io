@@ -2,8 +2,8 @@ import type { Metadata, NextPage } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import Header from './components/Header.tsx'
-import { ThemeProvider } from './components/Theme/ThemeProvider.tsx'
 import './globals.css'
+import { ThemeProvider } from './Theme/ThemeProvider.tsx'
 
 const inter = Inter({
   display: 'swap',

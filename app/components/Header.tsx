@@ -1,10 +1,10 @@
 'use client'
 
-import ThemeSwitch from '@/app/components/Theme/ThemeSwitch'
+import ThemeSwitch from '@/app/Theme/ThemeSwitch.tsx'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
-import { useTheme } from './Theme/ThemeProvider.tsx'
+import { useTheme } from '../Theme/ThemeProvider.tsx'
 
 function Header() {
   const containerRef = useRef<HTMLDivElement>(null)
