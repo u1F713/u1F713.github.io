@@ -1,36 +1,59 @@
-export type ColorScheme = 'dark' | 'light'
-export type Storage = ColorScheme | 'auto'
+import { SetStateAction } from 'react'
 
+type Theme = {
+  colorScheme: 'dark' | 'light'
+}
+
+const isServer = typeof window === 'undefined'
 const storageKey = 'theme-color-scheme'
 const media = '(prefers-color-scheme: dark)'
 
-export const getSystemColorScheme = () =>
+const getSystemColorScheme = () =>
   window.matchMedia(media).matches ? 'dark' : 'light'
 
-export const setColorScheme = (v: Storage) => {
-  localStorage.setItem(storageKey, v)
-  window.dispatchEvent(new StorageEvent('storage'))
-}
-
-export const getLocalColorScheme = (): Storage => {
+const getColorScheme = () => {
   const local = localStorage.getItem(storageKey)
-  return local === 'light' || local === 'dark' ? local : 'auto'
+  return local === 'light' || local === 'dark' ? local : getSystemColorScheme()
 }
 
-export const subscribe = (onChange: () => void) => {
-  const ctrl = new AbortController()
-  window.addEventListener('storage', onChange, { signal: ctrl.signal })
-  window
-    .matchMedia(media)
-    .addEventListener('change', onChange, { signal: ctrl.signal })
-  return () => {
-    ctrl.abort()
+export function makeThemeStorage() {
+  const listeners = new Set<() => void>()
+  const systemQuery = isServer ? undefined : window.matchMedia(media)
+  const theme: Theme = { colorScheme: isServer ? 'light' : getColorScheme() }
+
+  const emitChange = () => {
+    theme.colorScheme = getColorScheme()
+    return listeners.forEach(l => l())
   }
-}
 
-export const snapshot = (): ColorScheme => {
-  const colorScheme = localStorage.getItem(storageKey)
-  return colorScheme === 'light' || colorScheme === 'dark'
-    ? colorScheme
-    : getSystemColorScheme()
+  return {
+    subscribe: (listener: () => void) => {
+      listeners.add(listener)
+
+      if (listeners.size === 1) {
+        systemQuery?.addEventListener('change', emitChange)
+        window.addEventListener('storage', emitChange)
+      }
+
+      return () => {
+        listeners.delete(listener)
+
+        if (listeners.size === 0) {
+          systemQuery?.removeEventListener('change', emitChange)
+          window.removeEventListener('storage', emitChange)
+        }
+      }
+    },
+    getSnapshot: () => theme.colorScheme,
+    setColorScheme: (value: SetStateAction<Theme['colorScheme']>) => {
+      const nextState =
+        value instanceof Function ? value(theme.colorScheme) : value
+
+      localStorage.setItem(
+        storageKey,
+        nextState === getSystemColorScheme() ? 'auto' : nextState
+      )
+      window.dispatchEvent(new StorageEvent('storage'))
+    }
+  }
 }

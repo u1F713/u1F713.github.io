@@ -4,7 +4,7 @@ import ThemeSwitch from '@/app/Theme/ThemeSwitch.tsx'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
-import { useTheme } from '../Theme/ThemeProvider.tsx'
+import useTheme from '../Theme/useTheme.ts'
 
 function Header() {
   const containerRef = useRef<HTMLDivElement>(null)
