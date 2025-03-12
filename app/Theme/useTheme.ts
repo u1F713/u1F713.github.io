@@ -1,5 +1,7 @@
 import { useSyncExternalStore } from 'react'
-import { storage } from './ThemeScript.tsx'
+import { makeThemeStorage } from './themeStorage.ts'
+
+const storage = makeThemeStorage()
 
 export default function useTheme() {
   const colorScheme = useSyncExternalStore(

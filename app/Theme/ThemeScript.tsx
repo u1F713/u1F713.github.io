@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, type FunctionComponent } from 'react'
-import { makeThemeStorage } from './themeStorage.ts'
 import useTheme from './useTheme.ts'
 
 const preloadTheme = () => {
@@ -14,8 +13,6 @@ const preloadTheme = () => {
       : colorScheme === 'dark'
   )
 }
-
-export const storage = makeThemeStorage()
 
 const ThemeScript: FunctionComponent = () => {
   const { colorScheme } = useTheme()
