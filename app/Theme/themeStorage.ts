@@ -17,9 +17,17 @@ const getColorScheme = () => {
 }
 
 export function makeThemeStorage() {
+  if (isServer) {
+    return {
+      subscribe: () => () => {},
+      getSnapshot: () => 'light',
+      setColorScheme: () => {}
+    }
+  }
+
   const listeners = new Set<() => void>()
-  const systemQuery = isServer ? undefined : window.matchMedia(media)
-  const theme: Theme = { colorScheme: isServer ? 'light' : getColorScheme() }
+  const systemQuery = window.matchMedia(media)
+  const theme: Theme = { colorScheme: getColorScheme() }
 
   const emitChange = () => {
     theme.colorScheme = getColorScheme()
