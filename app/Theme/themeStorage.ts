@@ -65,3 +65,38 @@ export function makeThemeStorage() {
     }
   }
 }
+
+export function createAccentColorStorage(storageKey: string) {
+  const getAccentColor = () => localStorage.getItem(storageKey) ?? 'blue'
+  const storage = { accentColor: isServer ? '' : getAccentColor() }
+  const listeners = new Set<() => void>()
+
+  const emitChange = () => {
+    storage.accentColor = getAccentColor()
+    listeners.forEach(l => l())
+  }
+
+  const setAccentColor = (value: string) => {
+    localStorage.setItem(storageKey, value)
+    emitChange()
+  }
+
+  return {
+    subscribe: (listener: () => void) => {
+      listeners.add(listener)
+
+      if (listeners.size === 1) {
+        window.addEventListener('storage', emitChange)
+      }
+
+      return () => {
+        listeners.delete(listener)
+
+        if (listeners.size === 0) {
+          window.removeEventListener('storage', emitChange)
+        }
+      }
+    },
+    getSnapshot: () => Object.assign(storage, { setAccentColor })
+  }
+}
