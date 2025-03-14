@@ -4,11 +4,11 @@ import ThemeSwitch from '@/app/Theme/ThemeSwitch.tsx'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
-import useTheme from '../Theme/useTheme.ts'
+import { useTheme } from '../Theme/useTheme.ts'
 
 function Header() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { setColorScheme } = useTheme()
+  const { setTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +67,10 @@ function Header() {
             <span
               className={'hover:bg-dn-surface-100 flex rounded-md p-2.5'}
               onClick={() =>
-                setColorScheme(prev => (prev === 'dark' ? 'light' : 'dark'))
+                setTheme(theme => ({
+                  ...theme,
+                  colorScheme: theme.colorScheme === 'dark' ? 'light' : 'dark'
+                }))
               }
             >
               <ThemeSwitch />

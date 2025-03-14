@@ -1,23 +1,11 @@
 import { useSyncExternalStore } from 'react'
-import { createAccentColorStorage, makeThemeStorage } from './themeStorage.ts'
+import { createThemeStorage } from './themeStorage.ts'
 
-const storage = makeThemeStorage()
+const themeStorage = createThemeStorage('theme')
 
-export default function useTheme() {
-  const colorScheme = useSyncExternalStore(
-    storage.subscribe,
-    storage.getSnapshot,
-    storage.getSnapshot
-  )
-
-  return { colorScheme, setColorScheme: storage.setColorScheme }
-}
-
-const accentColor = createAccentColorStorage('theme-accent-color')
-
-export const useAccentColor = () =>
+export const useTheme = () =>
   useSyncExternalStore(
-    accentColor.subscribe,
-    accentColor.getSnapshot,
-    accentColor.getSnapshot
+    themeStorage.subscribe,
+    themeStorage.getSnapshot,
+    themeStorage.getSnapshot
   )

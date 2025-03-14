@@ -1,24 +1,35 @@
 'use client'
 
 import { useEffect, type FunctionComponent } from 'react'
-import useTheme, { useAccentColor } from './useTheme.ts'
+import { useTheme } from './useTheme.ts'
 
-const preloadTheme = () => {
-  const colorScheme = localStorage.getItem('theme-color-scheme')
-  const accentColor = localStorage.getItem('theme-accent-color')
+function preloadTheme() {
+  try {
+    const stringify = localStorage.getItem('theme') ?? '{}'
+    const { colorScheme, accentColor } = JSON.parse(stringify)
 
-  document.documentElement.classList.toggle(
-    'dark',
-    !colorScheme || colorScheme === 'auto'
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches
-      : colorScheme === 'dark'
-  )
-  document.documentElement.setAttribute('accent-color', accentColor ?? 'blue')
+    if (!colorScheme || !accentColor) {
+      throw new Error()
+    }
+
+    document.documentElement.classList.toggle(
+      'dark',
+      colorScheme === 'auto'
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+        : colorScheme === 'dark'
+    )
+    document.documentElement.setAttribute('accent-color', accentColor)
+  } catch {
+    localStorage.setItem(
+      'theme',
+      '{"colorScheme":"auto","accentColor":"blue"}'
+    )
+    preloadTheme()
+  }
 }
 
 const ThemeScript: FunctionComponent = () => {
-  const { colorScheme } = useTheme()
-  const { accentColor } = useAccentColor()
+  const { colorScheme, accentColor } = useTheme()
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', colorScheme === 'dark')

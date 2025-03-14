@@ -1,102 +1,76 @@
-import { SetStateAction } from 'react'
-
 type Theme = {
   colorScheme: 'dark' | 'light'
+  accentColor: string
 }
+type SetState<T> = (value: T | { (v: T): T }) => T
 
 const isServer = typeof window === 'undefined'
-const storageKey = 'theme-color-scheme'
-const media = '(prefers-color-scheme: dark)'
 
-const getSystemColorScheme = () =>
-  window.matchMedia(media).matches ? 'dark' : 'light'
-
-const getColorScheme = () => {
-  const local = localStorage.getItem(storageKey)
-  return local === 'light' || local === 'dark' ? local : getSystemColorScheme()
+const getMedia = () => {
+  if (!isServer) return window.matchMedia('(prefers-color-scheme: dark)')
 }
 
-export function makeThemeStorage() {
-  if (isServer) {
-    return {
-      subscribe: () => () => {},
-      getSnapshot: () => 'light',
-      setColorScheme: () => {}
+const getSystemColorScheme = () => (getMedia()?.matches ? 'dark' : 'light')
+
+export const getTheme = (storageKey: string): Theme => {
+  try {
+    const stringify = localStorage.getItem(storageKey) ?? '{}'
+    const theme: Theme = JSON.parse(stringify)
+
+    if (
+      (theme.colorScheme === 'dark' || theme.colorScheme === 'light') &&
+      ['blue'].includes(theme.accentColor)
+    ) {
+      return theme
     }
-  }
-
-  const listeners = new Set<() => void>()
-  const systemQuery = window.matchMedia(media)
-  const theme: Theme = { colorScheme: getColorScheme() }
-
-  const emitChange = () => {
-    theme.colorScheme = getColorScheme()
-    return listeners.forEach(l => l())
-  }
-
-  return {
-    subscribe: (listener: () => void) => {
-      listeners.add(listener)
-
-      if (listeners.size === 1) {
-        systemQuery?.addEventListener('change', emitChange)
-        window.addEventListener('storage', emitChange)
-      }
-
-      return () => {
-        listeners.delete(listener)
-
-        if (listeners.size === 0) {
-          systemQuery?.removeEventListener('change', emitChange)
-          window.removeEventListener('storage', emitChange)
-        }
-      }
-    },
-    getSnapshot: () => theme.colorScheme,
-    setColorScheme: (value: SetStateAction<Theme['colorScheme']>) => {
-      const nextState =
-        value instanceof Function ? value(theme.colorScheme) : value
-
-      localStorage.setItem(
-        storageKey,
-        nextState === getSystemColorScheme() ? 'auto' : nextState
-      )
-      window.dispatchEvent(new StorageEvent('storage'))
-    }
-  }
+  } catch {}
+  return { colorScheme: getSystemColorScheme(), accentColor: 'blue' }
 }
 
-export function createAccentColorStorage(storageKey: string) {
-  const getAccentColor = () => localStorage.getItem(storageKey) ?? 'blue'
-  const storage = { accentColor: isServer ? '' : getAccentColor() }
+export function createThemeStorage(storageKey: string) {
   const listeners = new Set<() => void>()
+  const media = getMedia()
+  let storage = getTheme(storageKey)
 
   const emitChange = () => {
-    storage.accentColor = getAccentColor()
+    storage = getTheme(storageKey)
     listeners.forEach(l => l())
   }
 
-  const setAccentColor = (value: string) => {
-    localStorage.setItem(storageKey, value)
+  const setTheme: SetState<Theme> = value => {
+    const nextState = value instanceof Function ? value(storage) : value
+    const system = getSystemColorScheme()
+    const stringifyState = JSON.stringify({
+      ...nextState,
+      colorScheme:
+        nextState.colorScheme === system ? 'auto' : nextState.colorScheme
+    })
+    localStorage.setItem(storageKey, stringifyState)
     emitChange()
+
+    return nextState
+  }
+
+  const subscribe = (listener: () => void) => {
+    listeners.add(listener)
+
+    if (listeners.size === 1) {
+      window.addEventListener('storage', emitChange)
+      media!.addEventListener('change', emitChange)
+    }
+
+    return () => {
+      listeners.delete(listener)
+
+      if (listeners.size === 0) {
+        media!.removeEventListener('change', emitChange)
+        window.removeEventListener('storage', emitChange)
+      }
+    }
   }
 
   return {
-    subscribe: (listener: () => void) => {
-      listeners.add(listener)
-
-      if (listeners.size === 1) {
-        window.addEventListener('storage', emitChange)
-      }
-
-      return () => {
-        listeners.delete(listener)
-
-        if (listeners.size === 0) {
-          window.removeEventListener('storage', emitChange)
-        }
-      }
-    },
-    getSnapshot: () => Object.assign(storage, { setAccentColor })
+    subscribe,
+    getSnapshot: () => Object.assign(storage as Theme, { setTheme })
   }
 }
