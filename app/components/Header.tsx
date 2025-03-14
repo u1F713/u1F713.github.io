@@ -13,18 +13,19 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       containerRef.current?.classList.toggle(
-        'border-b',
+        'shadow-dn-border',
         document.documentElement.scrollTop > 0
       )
     }
 
+    handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <div
-      className="bg-dn-surface-200/50 border-dn-border sticky top-0 z-50 backdrop-blur-sm"
+      className="bg-dn-surface-200/50 sticky top-0 z-50 shadow-[0_1px_0_0] shadow-[transparent] backdrop-blur-sm"
       ref={containerRef}
     >
       <header className="mx-auto flex max-w-screen-lg items-center justify-between px-4 py-2">
