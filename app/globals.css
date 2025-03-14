@@ -13,6 +13,10 @@
     var(--color-dn-color-200) 20%,
     transparent
   );
+  --color-dn-accent-200: var(
+    --dn-accent-200,
+    oklch(54.41% 0.2687 263.65 / 60%)
+  );
 }
 
 @layer theme {
@@ -26,6 +30,7 @@
     --dn-color-200: oklch(96.75% 0.0168 270);
     --dn-surface-100: oklch(22.97% 0.0015 197.05);
     --dn-surface-200: oklch(13% 0.002 246.26);
+    --dn-accent-200: oklch(54.41% 0.2687 263.65 / 70%);
   }
 
   .dark .shiki,

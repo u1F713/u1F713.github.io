@@ -9,7 +9,7 @@ const Mark: React.FC<MarkProps> = ({ className, children, ...props }) => {
       className={clsx(
         'relative bg-inherit text-inherit',
         'after:absolute after:bottom-0 after:left-0 after:-z-1 after:block',
-        'after:h-2/5 after:w-full after:bg-fuchsia-500 after:duration-50',
+        'after:bg-dn-accent-200 after:h-2/5 after:w-full after:duration-50',
         'hover:after:h-full',
         className
       )}
