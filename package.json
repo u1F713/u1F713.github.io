@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "effect": "^3.12.11",
+    "effect": "^3.13.10",
     "next": "15.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
