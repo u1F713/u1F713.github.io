@@ -5,7 +5,7 @@ jobs:
   unit-testing:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
+      name: testing
     env:
       BASE_PATH: ${{vars.BASE_PATH}}
       CLOUDINARY_CLOUD_NAME: ${{vars.CLOUDINARY_CLOUD_NAME}}
