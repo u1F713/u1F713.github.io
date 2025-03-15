@@ -61,11 +61,11 @@ importers:
         specifier: ^20.17.17
         version: 20.17.17
       '@types/react':
-        specifier: ^19.0.8
-        version: 19.0.8
+        specifier: ^19.0.10
+        version: 19.0.10
       '@types/react-dom':
         specifier: ^19.0.3
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.3(@types/react@19.0.10)
       babel-plugin-react-compiler:
         specifier: 19.0.0-beta-201e55d-20241215
         version: 19.0.0-beta-201e55d-20241215
@@ -895,8 +895,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react@19.0.8':
-    resolution: {integrity: sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==}
+  '@types/react@19.0.10':
+    resolution: {integrity: sha512-JuRQ9KXLEjaUNjTWpzuR231Z2WpIwczOkBEIvbHNCzQefFIT0L8IqE6NV6ULLyC1SI/i234JnDoMkfg+RjQj2g==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -3697,11 +3697,11 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
-  '@types/react-dom@19.0.3(@types/react@19.0.8)':
+  '@types/react-dom@19.0.3(@types/react@19.0.10)':
     dependencies:
-      '@types/react': 19.0.8
+      '@types/react': 19.0.10
 
-  '@types/react@19.0.8':
+  '@types/react@19.0.10':
     dependencies:
       csstype: 3.1.3
 
